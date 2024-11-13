@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+
+    #container1{
+        padding:20px;
+        border:1px solid black;
+        background-color: grey;
+        margin:10px;
+        height: 300px;
+        width: 300px;
+    }
+</style>
+
+</head>
+<body>
+
+   <div id="container1">
+
+    <label for="input1">Inserisci valore 1</label>
+    <input id="input1" type="text">
+    <label for="input2">Inserisci valore 2</label>
+    <input id="input2" type="text">
+    <p>  </p>
+    <button onclick="calcola()"> Calcola</button>
+    <p id="out1"></p>
+   </div>
+
+
+   <script>
+    function calcola(){
+
+        let i1;
+        let i2;
+        let risultato;
+        i1=document.getElementById("input1").value;
+        i2=document.getElementById("input2").value;
+        risultato=i1*i2;
+        document.getElementById("out1").innerHTML=risultato;
+    }
+
+
+
+   </script>
+   
+</body>
+</html>
