@@ -30,16 +30,19 @@
   <div class="aforisma">
     <p id="aforisma1"> “La scienza è un modo di pensare molto più che un corpo di conoscenze.” Albert Einstein</p>
     <button onclick="nascondiTesto('aforisma1')">Nascondi Aforisma</button>
+    <button onclick="mostraTesto('aforisma1')">Mostra Aforisma</button>
   </div>
 
   <div class="aforisma">
     <p id="aforisma2"> “Se ho visto più lontano, è perché stavo sulle spalle di giganti.” Isaac Newton</p>
     <button onclick="nascondiTesto('aforisma2')">Nascondi Aforisma</button>
+    <button onclick="mostratestoTesto('aforisma2')">Mostra Aforisma</button>
   </div>
 
   <div class="aforisma">
     <p id="aforisma3">“Nella vita non c'è nulla da temere, solo da capire." Marie Curie</p>
     <button onclick="nascondiTesto('aforisma3')">Nascondi Aforisma</button>
+    <button onclick="mostraTesto('aforisma3')">Mostra Aforisma</button>
   </div>
 
   <div class="aforisma">
@@ -50,10 +53,17 @@
   <div class="aforisma">
     <p id="aforisma5"> “"Non è la più forte delle specie che sopravvive, né la più intelligente, ma quella che si adatta meglio al cambiamento." Charles Darwin</p>
     <button onclick="nascondiTesto('aforisma5')">Nascondi Aforisma</button>
+    <button onclick="mostraTesto('aforisma5')">Mostra Aforisma</button>
   </div>
 
   <script>
     function nascondiTesto(id) {
+      const testo = document.getElementById(id);
+      testo.style.display = "none"; 
+    }
+  </script>
+  <script>
+    function mostraTesto(id) {
       const testo = document.getElementById(id);
       testo.style.display = "none"; 
     }
