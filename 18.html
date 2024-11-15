@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Dislivello Trekking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calcolo Dislivello Trekking</h1>
+
+    <label for="partenza">Altezza punto di partenza (in metri):</label>
+    <input type="number" id="partenza" placeholder="Es. 500">
+
+    <label for="pausa">Altezza punto di pausa (in metri):</label>
+    <input type="number" id="pausa" placeholder="Es. 700">
+
+    <label for="arrivo">Altezza punto di arrivo (in metri):</label>
+    <input type="number" id="arrivo" placeholder="Es. 1500">
+
+    <br>
+    <button onclick="calcolaDislivello()">Calcola Dislivello</button>
+
+    <div class="result" id="dislivello"></div>
+
+    <script>
+        function calcolaDislivello() {
+            // Ottieni i valori dai campi di input
+            const partenza = parseFloat(document.getElementById("partenza").value);
+            const pausa = parseFloat(document.getElementById("pausa").value);
+            const arrivo = parseFloat(document.getElementById("arrivo").value);
+            
+            // Verifica che i valori siano numerici e validi
+            if (isNaN(partenza) || isNaN(pausa) || isNaN(arrivo)) {
+                alert("Per favore inserisci valori validi per tutte le altezze.");
+                return;
+            }
+
+            // Calcola il dislivello totale
+            const dislivello = Math.abs(partenza - pausa) + Math.abs(pausa - arrivo);
+
+            // Mostra il dislivello calcolato nella pagina
+            document.getElementById("dislivello").innerText = "Il dislivello totale del trekking è: " + dislivello + " metri.";
+        }
+    </script>
+</body>
+</html>
