@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Dislivello Trekking</title>
+    <style>
+      body {
+  background-image: url("montagna.jpg"), url("montagna.jpg");
+  background-repeat: no-repeat, repeat;
+  background-color: #cccccc;
+}
+             {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            padding: 5px;
+            width: 200px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Calcolo Dislivello Trekking</h1>
+<br>
+    <label for="partenza">Altezza punto di partenza (in metri):</label>
+    <input type="number" id="partenza" placeholder="Es. 500">
+<br>
+    <label for="pausa">Altezza punto di pausa (in metri):</label>
+    <input type="number" id="pausa" placeholder="Es. 700">
+<br>
+    <label for="arrivo">Altezza punto di arrivo (in metri):</label>
+    <input type="number" id="arrivo" placeholder="Es. 1500">
+
+    <br>
+    <button onclick="calcolaDislivello()">Calcola Dislivello</button>
+
+    <div class="result" id="dislivello"></div>
+</body>
+
+    <script>
+       
+// Funzione per calcolare la differenza in minuti
+function calcolaDifferenza(ora1, minuto1, ora2, minuto2) {
+    // Converti entrambe le ore e i minuti in minuti totali
+    const minutiTotali1 = (ora1 * 60) + minuto1;
+    const minutiTotali2 = (ora2 * 60) + minuto2;
+
+    // Calcola la differenza in valore assoluto
+    const differenza = Math.abs(minutiTotali1 - minutiTotali2);
+
+    return differenza;
+}
+
+// Esempio di utilizzo
+const input1 = { ora: 14, minuti: 30 }; // 14:30
+const input2 = { ora: 16, minuti: 15 }; // 16:15
+
+const differenza = calcolaDifferenza(input1.ora, input1.minuti, input2.ora, input2.minuti);
+
+console.log(`La differenza in minuti è: ${differenza}`);
+    </script>
+</body>
+</html>
