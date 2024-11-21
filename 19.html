@@ -56,8 +56,27 @@
 </body>
 
     <script>
-       
-// Funzione per calcolare la differenza in minuti
+        function calcolaDislivello() {
+            // Ottieni i valori dai campi di input
+            const partenza = parseFloat(document.getElementById("partenza").value);
+            const pausa = parseFloat(document.getElementById("pausa").value);
+            const arrivo = parseFloat(document.getElementById("arrivo").value);
+            
+            // Verifica che i valori siano numerici e validi
+            if (isNaN(partenza) || isNaN(pausa) || isNaN(arrivo)) {
+                alert("Per favore inserisci valori validi per tutte le altezze.");
+                return;
+            }
+
+            // Calcola il dislivello totale
+            const dislivello = Math.abs(partenza - pausa) + Math.abs(pausa - arrivo);
+
+            // Mostra il dislivello calcolato nella pagina
+            document.getElementById("dislivello").innerText = "Il dislivello totale del trekking è: " + dislivello + " metri.";
+        }
+    </script>
+     <script>
+    // Funzione per calcolare la differenza in minuti
 function calcolaDifferenza(ora1, minuto1, ora2, minuto2) {
     // Converti entrambe le ore e i minuti in minuti totali
     const minutiTotali1 = (ora1 * 60) + minuto1;
@@ -76,6 +95,5 @@ const input2 = { ora: 16, minuti: 15 }; // 16:15
 const differenza = calcolaDifferenza(input1.ora, input1.minuti, input2.ora, input2.minuti);
 
 console.log(`La differenza in minuti è: ${differenza}`);
-    </script>
+            </script>
 </body>
-</html>
