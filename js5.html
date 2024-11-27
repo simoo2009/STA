@@ -18,11 +18,11 @@
     }
 
     #container1 {
-        background-image: url(una\ montagna.png);
+        background-image: url(montagna.jpeg);
     }
 
     #container2 {
-        background-image: url(montagna\ 2.png);
+        background-image: url(montagna2.jpeg);
         color: black;
         background-color: rgba(0, 0, 0, 0.5);
     }
@@ -46,26 +46,21 @@
     }
 </style>
 </head>
-  <script>
-        function calcolaDislivello() {
-            // Ottieni i valori dai campi di input
-            const partenza = parseFloat(document.getElementById("partenza").value);
-            const pausa = parseFloat(document.getElementById("pausa").value);
-            const arrivo = parseFloat(document.getElementById("arrivo").value);
-            
-            // Verifica che i valori siano numerici e validi
-            if (isNaN(partenza) || isNaN(pausa) || isNaN(arrivo)) {
-                alert("Per favore inserisci valori validi per tutte le altezze.");
-                return;
-            }
+<body>
 
-            // Calcola il dislivello totale
-            const dislivello = Math.abs(partenza - pausa) + Math.abs(pausa - arrivo);
+   <div id="container1">
+        Inserisci i dati nella tabella e premi il tasto "calcola dislivello"
+        <p><label for="partenza">Partenza (m)</label></p>
+        <input id="partenza" type="text">
+        <p><label for="merenda">Pausa trekking (m)</label></p>
+        <input id="merenda" type="text">
+        <p><label for="arrivo">Arrivo (m)</label></p>
+        <input id="arrivo" type="text">
+        <p></p>
+        <button class="styled-button" onclick="calcola()">Calcola dislivello</button>
+        <p id="out1"></p>
+   </div>
 
-            // Mostra il dislivello calcolato nella pagina
-            document.getElementById("dislivello").innerText = "Il dislivello totale del trekking è: " + dislivello + " metri.";
-        }
-    </script>
    <div id="container2">
         Inserisci gli orari e premi "calcola tempo di percorrenza"
         <p><label for="orario_partenza">Orario di Partenza (HH:MM)</label></p>
