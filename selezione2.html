@@ -1,0 +1,42 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selezione</title>
+</head>
+<body>
+    <p>Per verificare se hai più, uguale o meno di 18 anni, digita la tua età
+   
+   
+    </p>
+    <button id="miobotton1" onclick="inputNumero()"> Inserisci la tua età</button>
+
+<script>
+
+    function inputNumero(){
+       let numero = prompt("Inserisci un numero");
+       numero=Number(numero);
+
+        //controlliamo se il numero è > 18
+        if (numero>0)
+        {
+            alert("il numero è valido")
+
+        }
+        else
+        {
+            alert("Attenzione il numero deve essere >0")
+
+        }
+
+
+
+
+</script>
+
+
+
+   
+</body>
+</html>
