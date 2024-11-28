@@ -18,14 +18,17 @@
             padding: 8px;
             width: 250px;
         }
-        .result-box {
+        .container {
+            display: flex;
+            gap: 30px; /* Spazio tra i box */
             margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            width: 250px;
-            margin-bottom: 20px;
         }
-        .result-box h3 {
+        .box {
+            padding: 20px;
+            border: 1px solid #ccc;
+            width: 300px;
+        }
+        .box h3 {
             margin-top: 0;
         }
         .result {
@@ -36,62 +39,69 @@
 <body>
     <h1>Calcolo Dislivello e Tempo di Percorrenza</h1>
 
-    <label for="partenza">Altitudine del Punto di Partenza (m):</label>
-    <input type="number" id="partenza" required>
+    <div class="container">
+        <!-- Box per il Dislivello -->
+        <div class="box">
+            <h3>Calcola Dislivello</h3>
+            <label for="partenza">Altitudine del Punto di Partenza (m):</label>
+            <input type="number" id="partenza" required>
 
-    <label for="pausa">Altitudine del Punto di Pausa (m):</label>
-    <input type="number" id="pausa" required>
+            <label for="pausa">Altitudine del Punto di Pausa (m):</label>
+            <input type="number" id="pausa" required>
 
-    <label for="arrivo">Altitudine del Punto di Arrivo (m):</label>
-    <input type="number" id="arrivo" required>
+            <label for="arrivo">Altitudine del Punto di Arrivo (m):</label>
+            <input type="number" id="arrivo" required>
 
-    <label for="orarioPartenza">Orario di Partenza (hh:mm):</label>
-    <input type="time" id="orarioPartenza" required>
+            <button onclick="calcolaDislivello()">Calcola Dislivello</button>
 
-    <label for="orarioArrivo">Orario di Arrivo (hh:mm):</label>
-    <input type="time" id="orarioArrivo" required>
+            <div class="result" id="resultDislivello"></div>
+        </div>
 
-    <button onclick="calcola()">Calcola Dislivello e Tempo</button>
+        <!-- Box per il Tempo -->
+        <div class="box">
+            <h3>Calcola Tempo di Percorrenza</h3>
+            <label for="orarioPartenza">Orario di Partenza (hh:mm):</label>
+            <input type="time" id="orarioPartenza" required>
 
-    <!-- Riquadro per il Dislivello -->
-    <div class="result-box" id="resultDislivello">
-        <h3>Dislivello Totale</h3>
-        <div class="result" id="dislivelloResult"></div>
-    </div>
+            <label for="orarioArrivo">Orario di Arrivo (hh:mm):</label>
+            <input type="time" id="orarioArrivo" required>
 
-    <!-- Riquadro per il Tempo -->
-    <div class="result-box" id="resultTempo">
-        <h3>Tempo di Percorrenza</h3>
-        <div class="result" id="tempoResult"></div>
+            <button onclick="calcolaTempo()">Calcola Tempo</button>
+
+            <div class="result" id="resultTempo"></div>
+        </div>
     </div>
 
     <script>
-        function calcola() {
+        function calcolaDislivello() {
             // Recupero i valori dai campi di input
             const partenza = parseFloat(document.getElementById("partenza").value);
             const pausa = parseFloat(document.getElementById("pausa").value);
             const arrivo = parseFloat(document.getElementById("arrivo").value);
 
-            const orarioPartenza = document.getElementById("orarioPartenza").value;
-            const orarioArrivo = document.getElementById("orarioArrivo").value;
-
             // Calcolo il dislivello totale
             const dislivelloTotale = Math.abs(arrivo - partenza) + Math.abs(pausa - partenza) + Math.abs(arrivo - pausa);
 
-            // Calcolo il tempo di percorrenza in minuti
+            // Mostra il risultato del dislivello
+            document.getElementById("resultDislivello").innerHTML = `${dislivelloTotale} m`;
+        }
+
+        function calcolaTempo() {
+            // Recupero i valori dagli orari di partenza e arrivo
+            const orarioPartenza = document.getElementById("orarioPartenza").value;
+            const orarioArrivo = document.getElementById("orarioArrivo").value;
+
             const [orePartenza, minutiPartenza] = orarioPartenza.split(':').map(Number);
             const [oreArrivo, minutiArrivo] = orarioArrivo.split(':').map(Number);
 
+            // Calcolo il tempo di percorrenza in minuti
             const tempoPartenzaInMinuti = orePartenza * 60 + minutiPartenza;
             const tempoArrivoInMinuti = oreArrivo * 60 + minutiArrivo;
 
             const tempoPercorrenza = Math.abs(tempoArrivoInMinuti - tempoPartenzaInMinuti);
 
-            // Mostra i risultati del dislivello
-            document.getElementById("dislivelloResult").innerHTML = `${dislivelloTotale} m`;
-
-            // Mostra i risultati del tempo
-            document.getElementById("tempoResult").innerHTML = `${Math.floor(tempoPercorrenza / 60)} ore e ${tempoPercorrenza % 60} minuti`;
+            // Mostra il risultato del tempo
+            document.getElementById("resultTempo").innerHTML = `${Math.floor(tempoPercorrenza / 60)} ore e ${tempoPercorrenza % 60} minuti`;
         }
     </script>
 </body>
