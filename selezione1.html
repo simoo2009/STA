@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selezione</title>
+</head>
+<body>
+    <p>La selezione o anche detta se condizionale
+    è un operazione che controlla un test di tipo booleano
+    (cioe se un espressione da vero o falso)
+   
+    Se il test è vero  eseguo una sequenza di istruzioni
+    Se il test è falso eseguo un'altra sequenza di istruzioni
 
+    Attenzione esempio
+
+    if(TEST)    restituisce o vero o falso
+    {
+        1 costrutto
+        se test == true eseguo il primo costrutto di istruzioni
+        all'interno delle prime parentesi graffe
+    }
+    else   (altrimenti)
+    {
+        2 costrutto
+        se test == false eseguo il secondo costrutto di istruzioni
+        all'interno delle prime parentesi graffe
+
+    }
+
+
+
+   
+   
+    </p>
+    <button id="miobotton1" onclick="inputNumero()"> Inserisci la tua età</button>
+
+<script>
+
+    function inputNumero(){
+       let numero = prompt("Inserisci un numero");
+       numero=Number(numero);
+
+        //controlliamo se il numero è > 0
+        if (numero>0)
+        {
+            alert("il numero è valido")
+
+        }
+        else
+        {
+            alert("Attenzione il numero deve essere >0")
+
+        }
+    }
+
+
+
+</script>
+
+
+
+   
+</body>
+</html>
