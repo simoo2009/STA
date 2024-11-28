@@ -18,8 +18,17 @@
             padding: 8px;
             width: 250px;
         }
-        .result {
+        .result-box {
             margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            width: 250px;
+            margin-bottom: 20px;
+        }
+        .result-box h3 {
+            margin-top: 0;
+        }
+        .result {
             font-weight: bold;
         }
     </style>
@@ -44,7 +53,17 @@
 
     <button onclick="calcola()">Calcola Dislivello e Tempo</button>
 
-    <div class="result" id="result"></div>
+    <!-- Riquadro per il Dislivello -->
+    <div class="result-box" id="resultDislivello">
+        <h3>Dislivello Totale</h3>
+        <div class="result" id="dislivelloResult"></div>
+    </div>
+
+    <!-- Riquadro per il Tempo -->
+    <div class="result-box" id="resultTempo">
+        <h3>Tempo di Percorrenza</h3>
+        <div class="result" id="tempoResult"></div>
+    </div>
 
     <script>
         function calcola() {
@@ -68,12 +87,11 @@
 
             const tempoPercorrenza = Math.abs(tempoArrivoInMinuti - tempoPartenzaInMinuti);
 
-            // Mostra i risultati
-            const result = `
-                Dislivello Totale: ${dislivelloTotale} m<br>
-                Tempo di Percorrenza: ${Math.floor(tempoPercorrenza / 60)} ore e ${tempoPercorrenza % 60} minuti
-            `;
-            document.getElementById("result").innerHTML = result;
+            // Mostra i risultati del dislivello
+            document.getElementById("dislivelloResult").innerHTML = `${dislivelloTotale} m`;
+
+            // Mostra i risultati del tempo
+            document.getElementById("tempoResult").innerHTML = `${Math.floor(tempoPercorrenza / 60)} ore e ${tempoPercorrenza % 60} minuti`;
         }
     </script>
 </body>
