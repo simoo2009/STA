@@ -1,68 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selezione</title>
-    <style> #miobotton1{
-        background-color: #04AA6D; /* Green */
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-      }</style>
+    <title>Verifica Età</title>
+    <script>
+        function verificaEta() {
+            // Chiede all'utente la sua età
+            var eta = prompt("Quanti anni hai?");
+            
+            // Verifica se l'età è un numero e maggiore o uguale a 18
+            if (eta >= 18) {
+                alert("Benvenuto! Sei maggiorenne.");
+            } else {
+                alert("Accesso negato. Sei minorenne.");
+            }
+        }
+    </script>
 </head>
 <body>
-    <p>Per verificare se hai più o meno di 18 anni, digita la tua età
-        Se il test rileva che sei maggiorenne, eseguo una sequenza di istruzioni
-        Se il test rileva che sei minorenne, eseguo un'altra sequenza di istruzioni
-
-    Attenzione esempio
-
-    if(TEST)    restituisce o vero o falso
-    {
-        1 costrutto
-        se test == true eseguo il primo costrutto di istruzioni
-        all'interno delle prime parentesi graffe
-    }
-    else   (altrimenti)
-    {
-        2 costrutto
-        se test == false eseguo il secondo costrutto di istruzioni
-        all'interno delle prime parentesi graffe
-
-    }
-
-</p> 
-
-<script>
- <button id="miobotton1" onclick="inputNumero()"> Inserisci la tua età</button>
-    function inputNumero(){
-       let numero = prompt("Inserisci un numero");
-       numero=Number(numero);
-
-        //controlliamo se il numero è > 18
-        if (numero>0)
-        {
-            alert("il numero è valido")
-
-        }
-        else
-        {
-            alert("Attenzione il numero deve essere >0")
-
-        }
-
-
-
-
-</script>
-
-
-
-   
+    <h1>Controllo Età</h1>
+    <button onclick="verificaEta()">Verifica la tua età</button>
 </body>
 </html>
