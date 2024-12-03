@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giorno della settimana</title>
+    <script>
+        function giornoDellaSettimana() {
+            // Chiedi all'utente di inserire un numero tra 1 e 7
+            var numero = prompt("Inserisci un numero da 1 a 7 per sapere il giorno della settimana:");
+            
+            // Usa if per determinare il giorno
+            if (numero == 1) {
+                alert("Lunedì");
+            } else if (numero == 2) {
+                alert("Martedì");
+            } else if (numero == 3) {
+                alert("Mercoledì");
+            } else if (numero == 4) {
+                alert("Giovedì");
+            } else if (numero == 5) {
+                alert("Venerdì");
+            } else if (numero == 6) {
+                alert("Sabato");
+            } else if (numero == 7) {
+                alert("Domenica");
+            } else {
+                alert("Numero non valido! Devi inserire un numero tra 1 e 7.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Scopri il giorno della settimana</h1>
+    <!-- Pulsante che attiva la funzione giornoDellaSettimana -->
+    <button onclick="giornoDellaSettimana()">Inserisci un numero da 1 a 7</button>
+</body>
+</html>
