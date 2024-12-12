@@ -3,137 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gioco Labirinto</title>
+    <title>Laberinto con Punteggio</title>
     <style>
-        /* Stili generali */
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-            margin: 0;
-        }
-
-        /* Contenitore del gioco */
-        .game-container {
             text-align: center;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
         }
-
-        /* Labirinto */
-        #maze {
+        .laberinto {
             display: grid;
             grid-template-columns: repeat(5, 50px);
             grid-template-rows: repeat(5, 50px);
-            gap: 1px;
-            margin-top: 20px;
-            position: relative;
+            gap: 2px;
+            margin: 20px auto;
+            width: 270px;
+            height: 270px;
+            border: 2px solid #333;
         }
-
-        /* Celle del labirinto */
-        .cell {
+        .celda {
             width: 50px;
             height: 50px;
-            background-color: #ddd;
+            background-color: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
-        /* Partenza */
-        .start {
-            background-color: green;
-        }
-
-        /* Traguardo */
-        .end {
-            background-color: red;
-        }
-
-        /* Pallina */
-        .ball {
-            position: absolute;
-            width: 40px;
-            height: 40px;
+        .jugador {
             background-color: blue;
             border-radius: 50%;
-            top: 10px;
-            left: 10px;
-            transition: top 0.2s, left 0.2s;
         }
-
-        /* Messaggio di vittoria */
-        .message {
+        .meta {
+            background-color: green;
+            border-radius: 50%;
+        }
+        .pared {
+            background-color: black;
+        }
+        .punteggio {
+            font-size: 20px;
             margin-top: 20px;
-            font-weight: bold;
-            color: green;
         }
     </style>
 </head>
 <body>
-    <div class="game-container">
-        <h1>Gioco Labirinto</h1>
-        <p>Muovi la pallina con le frecce per arrivare al traguardo!</p>
-        <div id="maze">
-            <div id="start" class="cell start"></div>
-            <div id="end" class="cell end"></div>
-            <div id="ball" class="ball"></div>
-        </div>
-        <div id="message" class="message"></div>
-    </div>
 
-    <script>
-        // Impostazioni iniziali del labirinto
-        const ball = document.getElementById('ball');
-        const maze = document.getElementById('maze');
-        const message = document.getElementById('message');
+<h1>Laberinto con Punteggio</h1>
+<div class="laberinto" id="laberinto"></div>
+<div class="punteggio" id="punteggio">Punteggio: 0</div>
 
-        // Posizione iniziale della pallina
-        let ballPosition = { x: 0, y: 0 };
+<script>
+    const laberinto = [
+        [' ', ' ', ' ', ' ', ' '],
+        [' ', '▓', '▓', '▓', ' '],
+        [' ', ' ', ' ', '▓', ' '],
+        [' ', '▓', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', 'G']
+    ];
 
-        // Impostazioni del labirinto
-        const mazeSize = 5; // 5x5
-        const endPosition = { x: 4, y: 4 }; // Traguardo in basso a destra
+    let giocatorePos = { x: 0, y: 0 };
+    let punteggio = 0;
 
-        // Funzione per muovere la pallina
-        function moveBall(dx, dy) {
-            let newX = ballPosition.x + dx;
-            let newY = ballPosition.y + dy;
-
-            // Controlla che la pallina non esca dal labirinto
-            if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize) {
-                ballPosition.x = newX;
-                ballPosition.y = newY;
-                ball.style.left = `${ballPosition.x * 50 + 5}px`;
-                ball.style.top = `${ballPosition.y * 50 + 5}px`;
-
-                // Controlla se il giocatore ha raggiunto il traguardo
-                if (ballPosition.x === endPosition.x && ballPosition.y === endPosition.y) {
-                    message.textContent = "Hai vinto! Hai raggiunto il traguardo!";
+    function creaLaberinto() {
+        const contenedor = document.getElementById('laberinto');
+        contenedor.innerHTML = ''; // Pulisce il labirinto
+        for (let y = 0; y < laberinto.length; y++) {
+            for (let x = 0; x < laberinto[y].length; x++) {
+                const celda = document.createElement('div');
+                celda.classList.add('celda');
+                if (laberinto[y][x] === '▓') {
+                    celda.classList.add('pared');
+                } else if (laberinto[y][x] === 'G') {
+                    celda.classList.add('meta');
                 }
+
+                if (giocatorePos.x === x && giocatorePos.y === y) {
+                    const giocatore = document.createElement('div');
+                    giocatore.classList.add('jugador');
+                    celda.appendChild(giocatore);
+                }
+
+                contenedor.appendChild(celda);
             }
         }
+    }
 
-        // Gestire l'input della tastiera per muovere la pallina
-        document.addEventListener('keydown', function(event) {
-            switch(event.key) {
-                case 'ArrowUp':
-                    moveBall(0, -1);
-                    break;
-                case 'ArrowDown':
-                    moveBall(0, 1);
-                    break;
-                case 'ArrowLeft':
-                    moveBall(-1, 0);
-                    break;
-                case 'ArrowRight':
-                    moveBall(1, 0);
-                    break;
+    function muoviGiocatore(dx, dy) {
+        const nuovoX = giocatorePos.x + dx;
+        const nuovoY = giocatorePos.y + dy;
+
+        if (nuovoX >= 0 && nuovoX < laberinto[0].length && nuovoY >= 0 && nuovoY < laberinto.length) {
+            if (laberinto[nuovoY][nuovoX] !== '▓') {
+                giocatorePos.x = nuovoX;
+                giocatorePos.y = nuovoY;
+                punteggio++;
+
+                if (laberinto[giocatorePos.y][giocatorePos.x] === 'G') {
+                    alert('Hai vinto! Punteggio finale: ' + punteggio);
+                    punteggio = 0;
+                }
+
+                document.getElementById('punteggio').innerText = 'Punteggio: ' + punteggio;
+                creaLaberinto();
             }
-        });
-    </script>
+        }
+    }
+
+    document.addEventListener('keydown', (evento) => {
+        switch (evento.key) {
+            case 'ArrowUp':
+                muoviGiocatore(0, -1);
+                break;
+            case 'ArrowDown':
+                muoviGiocatore(0, 1);
+                break;
+            case 'ArrowLeft':
+                muoviGiocatore(-1, 0);
+                break;
+            case 'ArrowRight':
+                muoviGiocatore(1, 0);
+                break;
+        }
+    });
+
+    creaLaberinto();
+</script>
+
 </body>
 </html>
