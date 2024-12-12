@@ -51,6 +51,7 @@
 <div class="punteggio" id="punteggio">Punteggio: 0</div>
 
 <script>
+    // Labirinto come matrice 5x5
     const laberinto = [
         [' ', ' ', ' ', ' ', ' '],
         [' ', '▓', '▓', '▓', ' '],
@@ -59,12 +60,16 @@
         [' ', ' ', ' ', ' ', 'G']
     ];
 
+    // Posizione iniziale del giocatore
     let giocatorePos = { x: 0, y: 0 };
     let punteggio = 0;
 
+    // Funzione per creare il labirinto
     function creaLaberinto() {
         const contenedor = document.getElementById('laberinto');
         contenedor.innerHTML = ''; // Pulisce il labirinto
+
+        // Crea le celle del labirinto
         for (let y = 0; y < laberinto.length; y++) {
             for (let x = 0; x < laberinto[y].length; x++) {
                 const celda = document.createElement('div');
@@ -75,6 +80,7 @@
                     celda.classList.add('meta');
                 }
 
+                // Aggiungi il giocatore alla posizione corretta
                 if (giocatorePos.x === x && giocatorePos.y === y) {
                     const giocatore = document.createElement('div');
                     giocatore.classList.add('jugador');
@@ -86,44 +92,52 @@
         }
     }
 
+    // Funzione per muovere il giocatore
     function muoviGiocatore(dx, dy) {
         const nuovoX = giocatorePos.x + dx;
         const nuovoY = giocatorePos.y + dy;
 
+        // Controlla se la nuova posizione è valida e non ci sono pareti
         if (nuovoX >= 0 && nuovoX < laberinto[0].length && nuovoY >= 0 && nuovoY < laberinto.length) {
             if (laberinto[nuovoY][nuovoX] !== '▓') {
                 giocatorePos.x = nuovoX;
                 giocatorePos.y = nuovoY;
                 punteggio++;
 
+                // Se il giocatore raggiunge la meta
                 if (laberinto[giocatorePos.y][giocatorePos.x] === 'G') {
                     alert('Hai vinto! Punteggio finale: ' + punteggio);
-                    punteggio = 0;
+                    punteggio = 0; // Resetta il punteggio
                 }
 
+                // Aggiorna la visualizzazione del punteggio
                 document.getElementById('punteggio').innerText = 'Punteggio: ' + punteggio;
+
+                // Rende visibile il nuovo labirinto
                 creaLaberinto();
             }
         }
     }
 
+    // Gestisce gli eventi di pressione dei tasti per muovere il giocatore
     document.addEventListener('keydown', (evento) => {
         switch (evento.key) {
-            case 'ArrowUp':
+            case 'ArrowUp':   // Muovi su
                 muoviGiocatore(0, -1);
                 break;
-            case 'ArrowDown':
+            case 'ArrowDown': // Muovi giù
                 muoviGiocatore(0, 1);
                 break;
-            case 'ArrowLeft':
+            case 'ArrowLeft': // Muovi a sinistra
                 muoviGiocatore(-1, 0);
                 break;
-            case 'ArrowRight':
+            case 'ArrowRight': // Muovi a destra
                 muoviGiocatore(1, 0);
                 break;
         }
     });
 
+    // Crea il labirinto iniziale
     creaLaberinto();
 </script>
 
