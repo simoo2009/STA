@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Arena</title>
+    <title>Game Arena con Spari</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -38,6 +38,14 @@
             top: -50px;
         }
 
+        .bullet {
+            width: 5px;
+            height: 15px;
+            background-color: yellow;
+            position: absolute;
+            bottom: 60px;
+        }
+
         #score {
             position: absolute;
             top: 10px;
@@ -64,7 +72,9 @@
     let playerY = gameArea.offsetHeight - player.offsetHeight - 10;
     let score = 0;
     let gameInterval;
+    let bulletInterval;
     let obstacleSpeed = 2;
+    let bullets = [];
 
     player.style.left = playerX + 'px';
     player.style.bottom = (gameArea.offsetHeight - playerY) + 'px';
@@ -111,6 +121,45 @@
         }, 20);
     }
 
+    function createBullet() {
+        let bullet = document.createElement('div');
+        bullet.classList.add('bullet');
+        bullet.style.left = playerX + player.offsetWidth / 2 - 2.5 + 'px';
+        gameArea.appendChild(bullet);
+        moveBullet(bullet);
+    }
+
+    function moveBullet(bullet) {
+        let bulletY = playerY + player.offsetHeight;
+        let bulletInterval = setInterval(function() {
+            bulletY += 5;
+            bullet.style.top = bulletY + 'px';
+
+            if (bulletY <= 0) {
+                clearInterval(bulletInterval);
+                gameArea.removeChild(bullet);
+            }
+
+            // Verifica collisione con ostacoli
+            let bulletRect = bullet.getBoundingClientRect();
+            let obstacles = document.querySelectorAll('.obstacle');
+            obstacles.forEach(obstacle => {
+                let obstacleRect = obstacle.getBoundingClientRect();
+                if (bulletRect.top <= obstacleRect.bottom &&
+                    bulletRect.bottom >= obstacleRect.top &&
+                    bulletRect.left <= obstacleRect.right &&
+                    bulletRect.right >= obstacleRect.left) {
+                    // Colpito un ostacolo
+                    clearInterval(bulletInterval);
+                    gameArea.removeChild(bullet);
+                    gameArea.removeChild(obstacle);
+                    score += 10; // Aggiungi punti per ogni ostacolo distrutto
+                    scoreDisplay.textContent = 'Punteggio: ' + score;
+                }
+            });
+        }, 20);
+    }
+
     function endGame() {
         clearInterval(gameInterval);
         alert('Game Over! Il tuo punteggio finale è: ' + score);
@@ -119,7 +168,12 @@
 
     // Funzione per avviare il gioco
     function startGame() {
-        document.addEventListener('keydown', movePlayer);
+        document.addEventListener('keydown', function(e) {
+            movePlayer(e);
+            if (e.key === ' ') {
+                createBullet(); // Sparare quando si preme la barra spaziatrice
+            }
+        });
         gameInterval = setInterval(spawnObstacle, 1000);
     }
 
