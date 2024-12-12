@@ -3,228 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Battle Royale con Livelli</title>
+    <title>Guida FPS tra le Montagne</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #eaeaea;
-            font-family: Arial, sans-serif;
-        }
-
-        #gameArea {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            background-color: #333;
-            overflow: hidden;
-        }
-
-        .player {
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            background-color: blue;
-            border-radius: 5px;
-        }
-
-        .bullet {
-            width: 5px;
-            height: 10px;
-            background-color: yellow;
-            position: absolute;
-        }
-
-        #score {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .dead {
-            background-color: grey;
-        }
-
-        .weapon {
-            position: absolute;
-            background-color: red;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
     </style>
 </head>
 <body>
 
-<div id="gameArea">
-    <div id="score">Giocatori: 4 - Livello: 1</div>
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/three@0.130.0/build/three.min.js"></script>
 <script>
-    // Impostazioni di base
-    const gameArea = document.getElementById('gameArea');
-    const scoreDisplay = document.getElementById('score');
+    // Impostazione di base
+    let scene, camera, renderer, clock;
+    let car, carSpeed = 0.1, carRotation = 0;
+    let mountains = [];
+    let ground;
 
-    const players = [];  // Array per i giocatori
-    const bullets = [];  // Array per i proiettili
+    // Creazione della scena, della fotocamera e del renderer
+    function init() {
+        scene = new THREE.Scene();
+        clock = new THREE.Clock();
 
-    let maxPlayers = 4;
-    let playerCount = 0;
-    let gameOver = false;
-    let level = 1;
-    let playerSpeed = 5;
-    let bulletSpeed = 10;
+        // Fotocamera in prima persona (FPS)
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 1, 5);  // Posizione iniziale della fotocamera
 
-    // Funzione per creare un nuovo giocatore
-    function createPlayer() {
-        const player = document.createElement('div');
-        player.classList.add('player');
-        player.style.top = `${Math.random() * (gameArea.clientHeight - 50)}px`;
-        player.style.left = `${Math.random() * (gameArea.clientWidth - 50)}px`;
+        // Renderer per il canvas
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-        gameArea.appendChild(player);
-        players.push({
-            element: player,
-            x: parseInt(player.style.left),
-            y: parseInt(player.style.top),
-            isAlive: true,
-            id: playerCount++
-        });
+        // Aggiungere la luce ambientale
+        const light = new THREE.AmbientLight(0xffffff, 1);
+        scene.add(light);
 
-        updateScore();
+        // Creazione del terreno (montagne)
+        createMountains();
+        createGround();
+
+        // Creazione del veicolo (un cubo semplice come auto)
+        createCar();
+
+        // Gestione eventi per il controllo del veicolo
+        document.addEventListener('keydown', onKeyDown, false);
+        document.addEventListener('keyup', onKeyUp, false);
+
+        // Funzione di animazione
+        animate();
     }
 
-    // Funzione per muovere i giocatori
-    function movePlayer(player, direction) {
-        if (direction === 'ArrowUp' && player.y > 0) player.y -= playerSpeed;
-        if (direction === 'ArrowDown' && player.y < gameArea.clientHeight - 50) player.y += playerSpeed;
-        if (direction === 'ArrowLeft' && player.x > 0) player.x -= playerSpeed;
-        if (direction === 'ArrowRight' && player.x < gameArea.clientWidth - 50) player.x += playerSpeed;
-
-        player.element.style.top = `${player.y}px`;
-        player.element.style.left = `${player.x}px`;
+    // Funzione per creare la "strada" o il terreno
+    function createGround() {
+        const geometry = new THREE.PlaneGeometry(1000, 1000, 50, 50);
+        const material = new THREE.MeshBasicMaterial({ color: 0x7CFC00, wireframe: true });
+        ground = new THREE.Mesh(geometry, material);
+        ground.rotation.x = -Math.PI / 2;
+        scene.add(ground);
     }
 
-    // Funzione per sparare
-    function shoot(player) {
-        const bullet = document.createElement('div');
-        bullet.classList.add('bullet');
-        bullet.style.left = `${player.x + 22}px`;  // Centro del giocatore
-        bullet.style.top = `${player.y - 10}px`;  // Sopra il giocatore
-
-        gameArea.appendChild(bullet);
-        bullets.push({
-            element: bullet,
-            x: player.x + 22,
-            y: player.y - 10,
-            direction: 'up',
-            shooterId: player.id
-        });
-    }
-
-    // Funzione per aggiornare lo stato del punteggio
-    function updateScore() {
-        const alivePlayers = players.filter(p => p.isAlive).length;
-        scoreDisplay.textContent = `Giocatori: ${alivePlayers} - Livello: ${level}`;
-    }
-
-    // Funzione per gestire la logica del colpo e dell'eliminazione
-    function checkCollisions() {
-        bullets.forEach(bullet => {
-            players.forEach(player => {
-                if (player.isAlive && bullet.shooterId !== player.id) {
-                    const bulletRect = bullet.element.getBoundingClientRect();
-                    const playerRect = player.element.getBoundingClientRect();
-                    if (
-                        bulletRect.top < playerRect.bottom &&
-                        bulletRect.bottom > playerRect.top &&
-                        bulletRect.left < playerRect.right &&
-                        bulletRect.right > playerRect.left
-                    ) {
-                        player.isAlive = false;
-                        player.element.classList.add('dead');
-                        gameArea.removeChild(bullet.element);
-                        updateScore();
-                    }
-                }
-            });
-
-            // Rimuove i proiettili fuori dal gioco
-            if (bullet.y < 0) {
-                gameArea.removeChild(bullet.element);
-            } else {
-                bullet.y -= bulletSpeed;
-                bullet.element.style.top = `${bullet.y}px`;
-            }
-        });
-    }
-
-    // Funzione principale del gioco
-    function gameLoop() {
-        if (players.filter(p => p.isAlive).length <= 1) {
-            gameOver = true;
-            setTimeout(() => {
-                alert('Game Over! Hai vinto! Passando al prossimo livello...');
-                levelUp();
-            }, 1000);
-            return;
-        }
-
-        checkCollisions();
-        if (!gameOver) {
-            requestAnimationFrame(gameLoop);
+    // Funzione per creare le montagne
+    function createMountains() {
+        for (let i = 0; i < 10; i++) {
+            const geometry = new THREE.ConeGeometry(5, 20, 4);
+            const material = new THREE.MeshBasicMaterial({ color: 0x8B4513 });
+            const mountain = new THREE.Mesh(geometry, material);
+            mountain.position.set(Math.random() * 500 - 250, 10, Math.random() * 500 - 250);
+            scene.add(mountain);
+            mountains.push(mountain);
         }
     }
 
-    // Funzione per passare al livello successivo
-    function levelUp() {
-        level++;
-        maxPlayers += 2; // Aumenta il numero massimo di giocatori per livello
-        playerSpeed += 1; // Aumenta la velocità del giocatore
-        bulletSpeed += 2; // Aumenta la velocità dei proiettili
-
-        players.forEach(player => {
-            player.isAlive = true;
-            player.element.classList.remove('dead');
-        });
-
-        players.length = 0; // Reset giocatori
-        playerCount = 0;
-        gameArea.innerHTML = '<div id="score">Giocatori: ' + maxPlayers + ' - Livello: ' + level + '</div>';
-
-        // Crea nuovi giocatori
-        for (let i = 0; i < maxPlayers; i++) {
-            createPlayer();
-        }
-
-        gameLoop();
+    // Funzione per creare l'auto (in questo caso, un cubo)
+    function createCar() {
+        const geometry = new THREE.BoxGeometry(2, 1, 4);
+        const material = new THREE.MeshBasicMaterial({ color: 0x0000FF });
+        car = new THREE.Mesh(geometry, material);
+        car.position.set(0, 1, 5);
+        scene.add(car);
     }
 
-    // Gestione dei tasti per movimento e sparo
-    document.addEventListener('keydown', (e) => {
-        players.forEach(player => {
-            if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-                movePlayer(player, e.key);
-            }
+    // Funzione per il controllo del veicolo tramite tasti
+    let isMovingForward = false, isMovingBackward = false, isTurningLeft = false, isTurningRight = false;
 
-            if (e.key === ' ' && player.isAlive) {
-                shoot(player);
-            }
-        });
-    });
-
-    // Funzione per iniziare la partita
-    function startGame() {
-        while (players.length < maxPlayers) {
-            createPlayer();
-        }
-        gameLoop();
+    function onKeyDown(event) {
+        if (event.key === 'w') isMovingForward = true;
+        if (event.key === 's') isMovingBackward = true;
+        if (event.key === 'a') isTurningLeft = true;
+        if (event.key === 'd') isTurningRight = true;
     }
 
-    startGame();
+    function onKeyUp(event) {
+        if (event.key === 'w') isMovingForward = false;
+        if (event.key === 's') isMovingBackward = false;
+        if (event.key === 'a') isTurningLeft = false;
+        if (event.key === 'd') isTurningRight = false;
+    }
+
+    // Funzione di animazione
+    function animate() {
+        requestAnimationFrame(animate);
+
+        const delta = clock.getDelta();
+
+        // Movimento avanti/indietro
+        if (isMovingForward) car.position.z -= carSpeed;
+        if (isMovingBackward) car.position.z += carSpeed;
+
+        // Rotazione sinistra/destra
+        if (isTurningLeft) car.rotation.y += 0.05;
+        if (isTurningRight) car.rotation.y -= 0.05;
+
+        // Aggiornamento della fotocamera per seguire il veicolo
+        camera.position.x = car.position.x + 0.5 * Math.sin(car.rotation.y);
+        camera.position.z = car.position.z + 0.5 * Math.cos(car.rotation.y);
+        camera.lookAt(car.position);
+
+        renderer.render(scene, camera);
+    }
+
+    // Inizializzare il gioco
+    init();
 </script>
 
 </body>
