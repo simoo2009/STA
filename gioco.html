@@ -3,210 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Arena con Livelli</title>
+    <title>Battle Royale con Livelli</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #eaeaea;
+            font-family: Arial, sans-serif;
         }
 
         #gameArea {
+            position: relative;
             width: 100%;
             height: 100vh;
             background-color: #333;
-            position: relative;
             overflow: hidden;
         }
 
         .player {
             width: 50px;
             height: 50px;
+            position: absolute;
             background-color: blue;
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .obstacle {
-            width: 50px;
-            height: 50px;
-            background-color: red;
-            position: absolute;
-            top: -50px;
+            border-radius: 5px;
         }
 
         .bullet {
             width: 5px;
-            height: 15px;
+            height: 10px;
             background-color: yellow;
             position: absolute;
-            bottom: 60px; /* Posizionato sopra il giocatore */
         }
 
         #score {
             position: absolute;
             top: 10px;
             left: 10px;
-            font-size: 20px;
             color: white;
+            font-size: 20px;
             font-weight: bold;
         }
 
-        .resistant {
-            background-color: green; /* Ostacolo resistente */
+        .dead {
+            background-color: grey;
+        }
+
+        .weapon {
+            position: absolute;
+            background-color: red;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
         }
     </style>
 </head>
 <body>
 
 <div id="gameArea">
-    <div id="score">Punteggio: 0</div>
-    <div class="player" id="player"></div>
+    <div id="score">Giocatori: 4 - Livello: 1</div>
 </div>
 
 <script>
-    let player = document.getElementById('player');
-    let gameArea = document.getElementById('gameArea');
-    let scoreDisplay = document.getElementById('score');
+    // Impostazioni di base
+    const gameArea = document.getElementById('gameArea');
+    const scoreDisplay = document.getElementById('score');
 
-    let playerX = gameArea.offsetWidth / 2 - player.offsetWidth / 2;
-    let playerY = gameArea.offsetHeight - player.offsetHeight - 10;
-    let score = 0;
+    const players = [];  // Array per i giocatori
+    const bullets = [];  // Array per i proiettili
+
+    let maxPlayers = 4;
+    let playerCount = 0;
+    let gameOver = false;
     let level = 1;
-    let gameInterval;
-    let bulletInterval;
-    let obstacleSpeed = 2;
-    let bulletSpeed = 5;
+    let playerSpeed = 5;
+    let bulletSpeed = 10;
 
-    player.style.left = playerX + 'px';
-    player.style.bottom = (gameArea.offsetHeight - playerY) + 'px';
+    // Funzione per creare un nuovo giocatore
+    function createPlayer() {
+        const player = document.createElement('div');
+        player.classList.add('player');
+        player.style.top = `${Math.random() * (gameArea.clientHeight - 50)}px`;
+        player.style.left = `${Math.random() * (gameArea.clientWidth - 50)}px`;
 
-    function movePlayer(e) {
-        if (e.key === 'ArrowLeft' && playerX > 0) {
-            playerX -= 10;
-        }
-        if (e.key === 'ArrowRight' && playerX < gameArea.offsetWidth - player.offsetWidth) {
-            playerX += 10;
-        }
-        player.style.left = playerX + 'px';
+        gameArea.appendChild(player);
+        players.push({
+            element: player,
+            x: parseInt(player.style.left),
+            y: parseInt(player.style.top),
+            isAlive: true,
+            id: playerCount++
+        });
+
+        updateScore();
     }
 
-    function spawnObstacle() {
-        let obstacle = document.createElement('div');
-        obstacle.classList.add('obstacle');
-        let randomX = Math.floor(Math.random() * (gameArea.offsetWidth - 50));
-        obstacle.style.left = randomX + 'px';
+    // Funzione per muovere i giocatori
+    function movePlayer(player, direction) {
+        if (direction === 'ArrowUp' && player.y > 0) player.y -= playerSpeed;
+        if (direction === 'ArrowDown' && player.y < gameArea.clientHeight - 50) player.y += playerSpeed;
+        if (direction === 'ArrowLeft' && player.x > 0) player.x -= playerSpeed;
+        if (direction === 'ArrowRight' && player.x < gameArea.clientWidth - 50) player.x += playerSpeed;
 
-        // A partire dal livello 4, aggiungi un ostacolo più resistente
-        if (level >= 4 && Math.random() < 0.2) {
-            obstacle.classList.add('resistant');
-        }
-
-        gameArea.appendChild(obstacle);
-        moveObstacle(obstacle);
+        player.element.style.top = `${player.y}px`;
+        player.element.style.left = `${player.x}px`;
     }
 
-    function moveObstacle(obstacle) {
-        let obstacleY = 0;
-        let obstacleInterval = setInterval(function() {
-            obstacleY += obstacleSpeed;
-            obstacle.style.top = obstacleY + 'px';
-
-            // Collisione con il giocatore
-            let obstacleRect = obstacle.getBoundingClientRect();
-            let playerRect = player.getBoundingClientRect();
-            if (obstacleRect.bottom >= playerRect.top && 
-                obstacleRect.left <= playerRect.right &&
-                obstacleRect.right >= playerRect.left) {
-                // Fine gioco
-                clearInterval(obstacleInterval);
-                endGame();
-            }
-
-            if (obstacleY > gameArea.offsetHeight) {
-                clearInterval(obstacleInterval);
-                gameArea.removeChild(obstacle);
-                score++;
-                scoreDisplay.textContent = 'Punteggio: ' + score;
-
-                // Passaggio al livello successivo
-                if (score >= level * 50) {
-                    level++;
-                    obstacleSpeed += 0.5; // Aumenta la velocità degli ostacoli
-                    bulletSpeed += 1; // Aumenta la velocità del proiettile
-                    alert('Passato al livello ' + level);
-                }
-            }
-        }, 20);
-    }
-
-    function createBullet() {
-        let bullet = document.createElement('div');
+    // Funzione per sparare
+    function shoot(player) {
+        const bullet = document.createElement('div');
         bullet.classList.add('bullet');
-        bullet.style.left = playerX + player.offsetWidth / 2 - 2.5 + 'px';
+        bullet.style.left = `${player.x + 22}px`;  // Centro del giocatore
+        bullet.style.top = `${player.y - 10}px`;  // Sopra il giocatore
+
         gameArea.appendChild(bullet);
-        moveBullet(bullet);
+        bullets.push({
+            element: bullet,
+            x: player.x + 22,
+            y: player.y - 10,
+            direction: 'up',
+            shooterId: player.id
+        });
     }
 
-    function moveBullet(bullet) {
-        let bulletY = playerY + player.offsetHeight;
-        let bulletInterval = setInterval(function() {
-            bulletY += bulletSpeed; // Movimento verso l'alto
-            bullet.style.top = bulletY + 'px';
+    // Funzione per aggiornare lo stato del punteggio
+    function updateScore() {
+        const alivePlayers = players.filter(p => p.isAlive).length;
+        scoreDisplay.textContent = `Giocatori: ${alivePlayers} - Livello: ${level}`;
+    }
 
-            // Fine del proiettile se esce dalla finestra
-            if (bulletY >= gameArea.offsetHeight) {
-                clearInterval(bulletInterval);
-                gameArea.removeChild(bullet);
-            }
-
-            // Verifica collisione con ostacoli
-            let bulletRect = bullet.getBoundingClientRect();
-            let obstacles = document.querySelectorAll('.obstacle');
-            obstacles.forEach(obstacle => {
-                let obstacleRect = obstacle.getBoundingClientRect();
-                if (bulletRect.top <= obstacleRect.bottom &&
-                    bulletRect.bottom >= obstacleRect.top &&
-                    bulletRect.left <= obstacleRect.right &&
-                    bulletRect.right >= obstacleRect.left) {
-                    // Colpito un ostacolo
-                    clearInterval(bulletInterval);
-                    gameArea.removeChild(bullet);
-
-                    // Se è un ostacolo resistente, servono più colpi
-                    if (obstacle.classList.contains('resistant')) {
-                        obstacle.classList.remove('resistant');
-                        obstacle.style.backgroundColor = 'orange'; // Cambio di colore
-                        score += 5; // Più punti per gli ostacoli resistenti
-                    } else {
-                        gameArea.removeChild(obstacle);
-                        score += 10; // Aggiungi punti per ogni ostacolo distrutto
+    // Funzione per gestire la logica del colpo e dell'eliminazione
+    function checkCollisions() {
+        bullets.forEach(bullet => {
+            players.forEach(player => {
+                if (player.isAlive && bullet.shooterId !== player.id) {
+                    const bulletRect = bullet.element.getBoundingClientRect();
+                    const playerRect = player.element.getBoundingClientRect();
+                    if (
+                        bulletRect.top < playerRect.bottom &&
+                        bulletRect.bottom > playerRect.top &&
+                        bulletRect.left < playerRect.right &&
+                        bulletRect.right > playerRect.left
+                    ) {
+                        player.isAlive = false;
+                        player.element.classList.add('dead');
+                        gameArea.removeChild(bullet.element);
+                        updateScore();
                     }
-
-                    scoreDisplay.textContent = 'Punteggio: ' + score;
                 }
             });
-        }, 20);
-    }
 
-    function endGame() {
-        clearInterval(gameInterval);
-        alert('Game Over! Il tuo punteggio finale è: ' + score);
-        location.reload();
-    }
-
-    // Funzione per avviare il gioco
-    function startGame() {
-        document.addEventListener('keydown', function(e) {
-            movePlayer(e);
-            if (e.key === ' ') {
-                createBullet(); // Sparare quando si preme la barra spaziatrice
+            // Rimuove i proiettili fuori dal gioco
+            if (bullet.y < 0) {
+                gameArea.removeChild(bullet.element);
+            } else {
+                bullet.y -= bulletSpeed;
+                bullet.element.style.top = `${bullet.y}px`;
             }
         });
-        gameInterval = setInterval(spawnObstacle, 1000);
+    }
+
+    // Funzione principale del gioco
+    function gameLoop() {
+        if (players.filter(p => p.isAlive).length <= 1) {
+            gameOver = true;
+            setTimeout(() => {
+                alert('Game Over! Hai vinto! Passando al prossimo livello...');
+                levelUp();
+            }, 1000);
+            return;
+        }
+
+        checkCollisions();
+        if (!gameOver) {
+            requestAnimationFrame(gameLoop);
+        }
+    }
+
+    // Funzione per passare al livello successivo
+    function levelUp() {
+        level++;
+        maxPlayers += 2; // Aumenta il numero massimo di giocatori per livello
+        playerSpeed += 1; // Aumenta la velocità del giocatore
+        bulletSpeed += 2; // Aumenta la velocità dei proiettili
+
+        players.forEach(player => {
+            player.isAlive = true;
+            player.element.classList.remove('dead');
+        });
+
+        players.length = 0; // Reset giocatori
+        playerCount = 0;
+        gameArea.innerHTML = '<div id="score">Giocatori: ' + maxPlayers + ' - Livello: ' + level + '</div>';
+
+        // Crea nuovi giocatori
+        for (let i = 0; i < maxPlayers; i++) {
+            createPlayer();
+        }
+
+        gameLoop();
+    }
+
+    // Gestione dei tasti per movimento e sparo
+    document.addEventListener('keydown', (e) => {
+        players.forEach(player => {
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                movePlayer(player, e.key);
+            }
+
+            if (e.key === ' ' && player.isAlive) {
+                shoot(player);
+            }
+        });
+    });
+
+    // Funzione per iniziare la partita
+    function startGame() {
+        while (players.length < maxPlayers) {
+            createPlayer();
+        }
+        gameLoop();
     }
 
     startGame();
