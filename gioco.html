@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Arena con Spari</title>
+    <title>Game Arena con Livelli</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,6 +54,10 @@
             color: white;
             font-weight: bold;
         }
+
+        .resistant {
+            background-color: green; /* Ostacolo resistente */
+        }
     </style>
 </head>
 <body>
@@ -71,9 +75,11 @@
     let playerX = gameArea.offsetWidth / 2 - player.offsetWidth / 2;
     let playerY = gameArea.offsetHeight - player.offsetHeight - 10;
     let score = 0;
+    let level = 1;
     let gameInterval;
     let bulletInterval;
     let obstacleSpeed = 2;
+    let bulletSpeed = 5;
 
     player.style.left = playerX + 'px';
     player.style.bottom = (gameArea.offsetHeight - playerY) + 'px';
@@ -93,6 +99,12 @@
         obstacle.classList.add('obstacle');
         let randomX = Math.floor(Math.random() * (gameArea.offsetWidth - 50));
         obstacle.style.left = randomX + 'px';
+
+        // A partire dal livello 4, aggiungi un ostacolo più resistente
+        if (level >= 4 && Math.random() < 0.2) {
+            obstacle.classList.add('resistant');
+        }
+
         gameArea.appendChild(obstacle);
         moveObstacle(obstacle);
     }
@@ -119,6 +131,14 @@
                 gameArea.removeChild(obstacle);
                 score++;
                 scoreDisplay.textContent = 'Punteggio: ' + score;
+
+                // Passaggio al livello successivo
+                if (score >= level * 50) {
+                    level++;
+                    obstacleSpeed += 0.5; // Aumenta la velocità degli ostacoli
+                    bulletSpeed += 1; // Aumenta la velocità del proiettile
+                    alert('Passato al livello ' + level);
+                }
             }
         }, 20);
     }
@@ -134,7 +154,7 @@
     function moveBullet(bullet) {
         let bulletY = playerY + player.offsetHeight;
         let bulletInterval = setInterval(function() {
-            bulletY += 5; // Movimento verso l'alto
+            bulletY += bulletSpeed; // Movimento verso l'alto
             bullet.style.top = bulletY + 'px';
 
             // Fine del proiettile se esce dalla finestra
@@ -155,8 +175,17 @@
                     // Colpito un ostacolo
                     clearInterval(bulletInterval);
                     gameArea.removeChild(bullet);
-                    gameArea.removeChild(obstacle);
-                    score += 10; // Aggiungi punti per ogni ostacolo distrutto
+
+                    // Se è un ostacolo resistente, servono più colpi
+                    if (obstacle.classList.contains('resistant')) {
+                        obstacle.classList.remove('resistant');
+                        obstacle.style.backgroundColor = 'orange'; // Cambio di colore
+                        score += 5; // Più punti per gli ostacoli resistenti
+                    } else {
+                        gameArea.removeChild(obstacle);
+                        score += 10; // Aggiungi punti per ogni ostacolo distrutto
+                    }
+
                     scoreDisplay.textContent = 'Punteggio: ' + score;
                 }
             });
