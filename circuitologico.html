@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifica Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .error {
+            color: red;
+        }
+        .valid {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Verifica della password</h1>
+    <form id="passwordForm">
+        <label for="password">Inserisci la password:</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">Verifica</button>
+    </form>
 
+    <p id="message"></p>
+
+    <script>
+        document.getElementById('passwordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var password = document.getElementById('password').value;
+            var message = document.getElementById('message');
+            
+            // Verifica delle condizioni
+            var isValid = checkPassword(password);
+            
+            if (isValid) {
+                message.textContent = "La password è valida!";
+                message.className = 'valid';
+            } else {
+                message.textContent = "La password non è valida. Assicurati che soddisfi tutte le condizioni.";
+                message.className = 'error';
+            }
+        });
+
+        function checkPassword(password) {
+            var isLongEnough = password.length >= 8;
+            var hasUpperCase = /[A-Z]/.test(password);
+            var hasNumber = /[0-9]/.test(password);
+            var hasAtSign = /@/.test(password);
+
+            return isLongEnough && hasUpperCase && hasNumber && !hasAtSign;
+        }
+    </script>
+</body>
+</html>
