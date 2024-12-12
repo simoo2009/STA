@@ -43,7 +43,7 @@
             height: 15px;
             background-color: yellow;
             position: absolute;
-            bottom: 60px;
+            bottom: 60px; /* Posizionato sopra il giocatore */
         }
 
         #score {
@@ -74,7 +74,6 @@
     let gameInterval;
     let bulletInterval;
     let obstacleSpeed = 2;
-    let bullets = [];
 
     player.style.left = playerX + 'px';
     player.style.bottom = (gameArea.offsetHeight - playerY) + 'px';
@@ -104,10 +103,13 @@
             obstacleY += obstacleSpeed;
             obstacle.style.top = obstacleY + 'px';
 
-            if (obstacleY >= gameArea.offsetHeight - 50 && 
-                obstacleX > playerX && 
-                obstacleX < playerX + player.offsetWidth) {
-                // Collisione con il giocatore
+            // Collisione con il giocatore
+            let obstacleRect = obstacle.getBoundingClientRect();
+            let playerRect = player.getBoundingClientRect();
+            if (obstacleRect.bottom >= playerRect.top && 
+                obstacleRect.left <= playerRect.right &&
+                obstacleRect.right >= playerRect.left) {
+                // Fine gioco
                 clearInterval(obstacleInterval);
                 endGame();
             }
@@ -132,10 +134,11 @@
     function moveBullet(bullet) {
         let bulletY = playerY + player.offsetHeight;
         let bulletInterval = setInterval(function() {
-            bulletY += 5;
+            bulletY += 5; // Movimento verso l'alto
             bullet.style.top = bulletY + 'px';
 
-            if (bulletY <= 0) {
+            // Fine del proiettile se esce dalla finestra
+            if (bulletY >= gameArea.offsetHeight) {
                 clearInterval(bulletInterval);
                 gameArea.removeChild(bullet);
             }
