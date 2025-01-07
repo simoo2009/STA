@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifica Lunghezza Stringhe</title>
+    <style>
+        /* CSS per migliorare l'aspetto della pagina */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .true {
+            color: green;
+        }
+
+        .false {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Verifica se entrambe le stringhe sono più lunghe di 8 caratteri</h2>
+
+    <label for="string1">Stringa 1:</label>
+    <input type="text" id="string1" placeholder="Inserisci la prima stringa">
+
+    <label for="string2">Stringa 2:</label>
+    <input type="text" id="string2" placeholder="Inserisci la seconda stringa">
+
+    <button onclick="verificaStringhe()">Verifica</button>
+
+    <div id="result" class="result"></div>
+
+    <script>
+        function verificaStringhe() {
+            const str1 = document.getElementById('string1').value;
+            const str2 = document.getElementById('string2').value;
+            const resultElement = document.getElementById('result');
+
+            // Verifica se entrambe le stringhe sono più lunghe di 8 caratteri
+            if (str1.length > 8 && str2.length > 8) {
+                resultElement.textContent = "Entrambe le stringhe sono più lunghe di 8 caratteri.";
+                resultElement.className = "result true";
+            } else {
+                resultElement.textContent = "Una o entrambe le stringhe non sono più lunghe di 8 caratteri.";
+                resultElement.className = "result false";
+            }
+        }
+    </script>
+
+</body>
+</html>
