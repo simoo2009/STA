@@ -27,7 +27,7 @@
 </head>
 <body>
 
-    <h2>Verifica se entrambe le stringhe sono più lunghe di 8 caratteri</h2>
+    <h2>Verifica se le stringhe sono più lunghe di 8 caratteri</h2>
 
     <label for="string1">Stringa 1:</label>
     <input type="text" id="string1" placeholder="Inserisci la prima stringa">
@@ -47,16 +47,13 @@
 
             // Controllo la lunghezza delle stringhe
             if (str1.length > 8 && str2.length > 8) {
-                resultElement.textContent = "Entrambe le stringhe sono più lunghe di 8 caratteri.";
+                resultElement.textContent = "Entrambe sono maggiori di 8";
                 resultElement.className = "result true";
-            } else if (str1.length > 8 && str2.length <= 8) {
-                resultElement.textContent = "La prima stringa è più lunga di 8 caratteri, ma la seconda no.";
-                resultElement.className = "result false";
-            } else if (str1.length <= 8 && str2.length > 8) {
-                resultElement.textContent = "La seconda stringa è più lunga di 8 caratteri, ma la prima no.";
+            } else if (str1.length > 8 || str2.length > 8) {
+                resultElement.textContent = "Una stringa è più lunga di 8";
                 resultElement.className = "result false";
             } else {
-                resultElement.textContent = "Entrambe le stringhe non sono più lunghe di 8 caratteri.";
+                resultElement.textContent = "Nessuna stringa è maggiore di 8";
                 resultElement.className = "result false";
             }
         }
@@ -64,4 +61,3 @@
 
 </body>
 </html>
-
