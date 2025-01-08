@@ -1,0 +1,39 @@
+
+
+Simone Gally
+12:30 (0 minuti fa)
+a me
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio Età</title>
+    <script>
+        function controllaEta() {
+            // Prendi il valore inserito dall'utente
+            let eta = document.getElementById("eta").value;
+
+            // Verifica se è maggiorenne o minorenne
+            let messaggio;
+            if (eta >= 18) {
+                messaggio = "Accedi al sistema";
+            } else {
+                let anniMancanti = 18 - eta;
+                messaggio = "Puoi accedere al sistema tra " + anniMancanti + " anni";
+            }
+
+            // Mostra il risultato
+            document.getElementById("risultato").innerText = messaggio;
+        }
+    </script>
+</head>
+<body>
+    <h1>Controllo Età</h1>
+    <p>Inserisci la tua età:</p>
+    <input type="number" id="eta" placeholder="Inserisci età">
+    <button onclick="controllaEta()">Controlla</button>
+    <p id="risultato"></p>
+</body>
+</html>
