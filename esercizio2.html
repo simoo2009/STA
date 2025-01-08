@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abitanti di Torino e Cintura</title>
+    <script>
+        function mostraAbitanti() {
+            // Dati sugli abitanti
+            var abitantiTorino = 870000; // Popolazione di Torino
+            var abitantiCittà = {
+                "Torino": abitantiTorino,
+                "Nichelino": 50000,
+                "Moncalieri": 58000,
+                "Vinovo": 13000,
+                "Rivoli": 65000,
+                "Collegno": 53000,
+                "Settimo": 48000,
+                "Chieri": 37000
+            };
+
+            var output = "<h2>Abitanti nelle città della cintura di Torino:</h2>";
+            
+            for (var città in abitantiCittà) {
+                output += "<p>Gli abitanti di " + città + " sono: " + abitantiCittà[città] + ".</p>";
+            }
+
+            // Mostra i dati sulla pagina
+            document.getElementById("risultato").innerHTML = output;
+        }
+    </script>
+</head>
+<body onload="mostraAbitanti()">
+    <h1>Popolazione Torino e Cintura</h1>
+    <div id="risultato"></div>
+</body>
+</html>
