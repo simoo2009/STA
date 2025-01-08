@@ -1,26 +1,26 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cattura il quadrato</title>
+  <title>Caccia al Quadrato</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #f0f0f0;
       margin: 0;
+      background-color: #f0f0f0;
     }
     .game-area {
       position: relative;
-      width: 400px;
-      height: 400px;
+      width: 500px;
+      height: 500px;
       border: 2px solid #000;
       background-color: #fff;
+      overflow: hidden;
     }
     .square {
       position: absolute;
@@ -28,55 +28,126 @@
       height: 50px;
       background-color: red;
       cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.2s ease;
     }
-    .score {
+    .score, .timer {
       position: absolute;
       top: 10px;
-      left: 10px;
       font-size: 20px;
       color: #333;
+      z-index: 10;
+    }
+    .score {
+      left: 10px;
+    }
+    .timer {
+      right: 10px;
+    }
+    .end-screen {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      color: white;
+      font-size: 24px;
+      text-align: center;
+      display: none;
     }
   </style>
 </head>
 <body>
+
   <div class="game-area">
     <div class="score">Punteggio: <span id="score">0</span></div>
-    <div class="square" id="square"></div>
+    <div class="timer">Tempo: <span id="time">30</span>s</div>
+    <div id="square" class="square"></div>
+  </div>
+
+  <div class="end-screen" id="end-screen">
+    Gioco finito! Il tuo punteggio finale è: <span id="final-score">0</span>
   </div>
 
   <script>
+    const gameArea = document.querySelector('.game-area');
     const square = document.getElementById('square');
     const scoreElement = document.getElementById('score');
-    let score = 0;
+    const timeElement = document.getElementById('time');
+    const endScreen = document.getElementById('end-screen');
+    const finalScoreElement = document.getElementById('final-score');
 
+    let score = 0;
+    let timeLeft = 30;
+    let gameInterval;
+    let squareTimeout;
+
+    // Funzione per ottenere una posizione casuale nel gioco
     function getRandomPosition() {
-      const gameArea = document.querySelector('.game-area');
       const maxX = gameArea.clientWidth - square.offsetWidth;
       const maxY = gameArea.clientHeight - square.offsetHeight;
-      
       const randomX = Math.floor(Math.random() * maxX);
       const randomY = Math.floor(Math.random() * maxY);
-      
       return { x: randomX, y: randomY };
     }
 
+    // Funzione per far apparire il quadrato in una nuova posizione
     function moveSquare() {
       const { x, y } = getRandomPosition();
       square.style.left = `${x}px`;
       square.style.top = `${y}px`;
     }
 
+    // Funzione per aggiornare il punteggio
     function increaseScore() {
       score++;
       scoreElement.textContent = `Punteggio: ${score}`;
+      moveSquare();
+      clearTimeout(squareTimeout);
+      squareTimeout = setTimeout(() => {
+        // Se il quadrato non viene cliccato entro il tempo limite
+        if (timeLeft > 0) {
+          moveSquare();
+        }
+      }, 1000); // Aspetta 1 secondo prima di muovere il quadrato
     }
 
-    square.addEventListener('click', () => {
-      increaseScore();
-      moveSquare();
-    });
+    // Funzione per aggiornare il timer
+    function updateTimer() {
+      if (timeLeft > 0) {
+        timeLeft--;
+        timeElement.textContent = `Tempo: ${timeLeft}s`;
+      } else {
+        clearInterval(gameInterval);
+        endGame();
+      }
+    }
 
-    moveSquare(); // Sposta subito il quadrato
+    // Funzione per terminare il gioco
+    function endGame() {
+      finalScoreElement.textContent = score;
+      endScreen.style.display = 'block';
+    }
+
+    // Inizializzare il gioco
+    function startGame() {
+      score = 0;
+      timeLeft = 30;
+      scoreElement.textContent = `Punteggio: 0`;
+      timeElement.textContent = `Tempo: 30s`;
+      endScreen.style.display = 'none';
+      gameInterval = setInterval(updateTimer, 1000);
+      moveSquare();
+    }
+
+    // Aggiungi l'evento di clic sul quadrato
+    square.addEventListener('click', increaseScore);
+
+    // Iniziare il gioco
+    startGame();
   </script>
+
 </body>
 </html>
