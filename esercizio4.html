@@ -3,35 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inserisci il tuo mese e anno</title>
+    <title>Calcola Età</title>
     <script>
-        function mostraMessaggio() {
-            var nome = document.getElementById("mese").value;
-            var sesso = document.querySelector('input[name="anno"]:checked').value;
-            var messaggio = "";
+        function calcolaEta() {
+            var mese = document.getElementById("mese").value;
+            var anno = document.getElementById("anno").value;
+            
+            // Ottenere la data di oggi
+            var oggi = new Date();
+            var annoCorrente = oggi.getFullYear();
+            var meseCorrente = oggi.getMonth() + 1;  // i mesi sono indicizzati da 0, quindi aggiungiamo 1
 
-            if (mese === "m") {
-                messaggio = "il " + mese + ", sei nato a .";
-            } else if (sesso === "f") {
-                messaggio = "Ciao " + nome + ", la tua aspettativa di vita in Italia è di circa 85 anni.";
+            // Calcolare gli anni
+            var eta = annoCorrente - anno;
+            if (meseCorrente < mese) {
+                eta--;  // Se non hai ancora compiuto gli anni quest'anno
             }
 
-            document.getElementById("risultato").innerText = messaggio;
+            // Visualizzare i risultati
+            document.getElementById("risultato").innerHTML = 
+                "Numero del mese di nascita: " + mese + "<br>" +
+                "Hai " + eta + " anni.";
         }
     </script>
 </head>
 <body>
-    <h1>Inserisci il tuo nome e sesso</h1>
+
+<h2>Calcola la tua Età</h2>
+<form>
+    <label for="mese">Mese di nascita:</label>
+    <input type="number" id="mese" name="mese" min="1" max="12" required><br><br>
     
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" required><br><br>
+    <label for="anno">Anno di nascita:</label>
+    <input type="number" id="anno" name="anno" min="1900" max="2100" required><br><br>
+    
+    <button type="button" onclick="calcolaEta()">Calcola</button>
+</form>
 
-    <label>Sesso:</label>
-    <input type="radio" id="maschio" name="sesso" value="m" required> Maschio
-    <input type="radio" id="femmina" name="sesso" value="f" required> Femmina<br><br>
+<p id="risultato"></p>
 
-    <button onclick="mostraMessaggio()">Invia</button>
-
-    <p id="risultato"></p>
 </body>
 </html>
