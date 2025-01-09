@@ -3,56 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcolo del Valore Immobiliare</title>
+    <title>Calcolo Costo al Metro Quadro</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        label {
-            font-size: 18px;
-            margin-right: 10px;
-        }
-        input[type="number"] {
-            padding: 5px;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        p {
-            font-size: 20px;
-            font-weight: bold;
+        label, input, button, p {
+            margin: 10px 0;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <h1>Calcolo del Valore Immobiliare</h1>
-    <p>Inserisci la distanza dal mare (in metri):</p>
-    <input type="number" id="distanza" placeholder="Distanza dal mare (m)" required>
-    <button onclick="calcolaValore()">Calcola valore</button>
-    
+    <h1>Calcolo Costo al Metro Quadro</h1>
+    <label for="mq">Inserisci i metri quadri:</label>
+    <input type="number" id="mq" placeholder="Es. 100" min="1">
+    <button onclick="calcolaCosto()">Calcola</button>
     <p id="risultato"></p>
 
     <script>
-        function calcolaValore() {
-            var distanza = document.getElementById("distanza").value;
-            var costoAlMetroQuadro;
-
-            // Verifica se la distanza è inferiore o superiore a 100 metri
-            if (distanza < 100) {
-                costoAlMetroQuadro = 10000;  // costo per casa vicina al mare
-            } else {
-                costoAlMetroQuadro = 7000;  // costo per casa più lontana
+        function calcolaCosto() {
+            const mq = parseInt(document.getElementById("mq").value);
+            if (isNaN(mq) || mq <= 0) {
+                document.getElementById("risultato").textContent = "Inserisci un valore valido.";
+                return;
             }
-
-            // Calcola il valore immobiliare
-            var risultato = "Il costo al metro quadro è di " + costoAlMetroQuadro + " euro.";
-
-            // Mostra il risultato
-            document.getElementById("risultato").innerHTML = risultato;
+            const costoMq = mq >= 100 ? 7000 : 10000;
+            const costoTotale = mq * costoMq;
+            document.getElementById("risultato").textContent = `Il costo totale è ${costoTotale} euro.`;
         }
     </script>
 </body>
