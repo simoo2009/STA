@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo del Valore Immobiliare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        input[type="number"] {
+            padding: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calcolo del Valore Immobiliare</h1>
+    <p>Inserisci la distanza dal mare (in metri):</p>
+    <input type="number" id="distanza" placeholder="Distanza dal mare (m)" required>
+    <button onclick="calcolaValore()">Calcola valore</button>
+    
+    <p id="risultato"></p>
+
+    <script>
+        function calcolaValore() {
+            var distanza = document.getElementById("distanza").value;
+            var costoAlMetroQuadro;
+
+            // Verifica se la distanza è inferiore o superiore a 100 metri
+            if (distanza < 100) {
+                costoAlMetroQuadro = 10000;  // costo per casa vicina al mare
+            } else {
+                costoAlMetroQuadro = 7000;  // costo per casa più lontana
+            }
+
+            // Calcola il valore immobiliare
+            var risultato = "Il costo al metro quadro è di " + costoAlMetroQuadro + " euro.";
+
+            // Mostra il risultato
+            document.getElementById("risultato").innerHTML = risultato;
+        }
+    </script>
+</body>
+</html>
