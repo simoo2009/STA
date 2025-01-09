@@ -1,37 +1,47 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcolo Costo al Metro Quadro</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        label, input, button, p {
-            margin: 10px 0;
-            display: block;
-        }
-    </style>
+    <title>Stima Valore Immobiliare</title>
 </head>
 <body>
-    <h1>Calcolo Costo al Metro Quadro</h1>
-    <label for="mq">Inserisci i metri quadri:</label>
-    <input type="number" id="mq" placeholder="Es. 100" min="1">
-    <button onclick="calcolaCosto()">Calcola</button>
+    <h2>Stima del Valore Immobiliare</h2>    <style>
+        #calcola {
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #04AA6D;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+    </style>
+    <p>Inserisci la distanza dalla casa al mare (in km):</p>
+    <input type="number" id="distanza" placeholder="Distanza in km">
+    <button id="calcola" onclick="calcola()">Stima il Valore</button>
+   
     <p id="risultato"></p>
-
     <script>
-        function calcolaCosto() {
-            const mq = parseInt(document.getElementById("mq").value);
-            if (isNaN(mq) || mq <= 0) {
-                document.getElementById("risultato").textContent = "Inserisci un valore valido.";
-                return;
+        function calcola() {
+            let distanza = document.getElementById("distanza").value;
+            let costoMetroQuadro = 0;
+            let messaggio = "";
+
+            if (distanza < 100) {
+                costoMetroQuadro = 10000; 
+                messaggio = "Il costo al metro quadro è di " + costoMetroQuadro + " euro.";
+            } else {
+                costoMetroQuadro = 7000; 
+                messaggio = "Il costo al metro quadro è di " + costoMetroQuadro + " euro.";
             }
-            const costoMq = mq >= 100 ? 7000 : 10000;
-            const costoTotale = mq * costoMq;
-            document.getElementById("risultato").textContent = `Il costo totale è ${costoTotale} euro.`;
+
+            document.getElementById("risultato").innerText = messaggio;
         }
     </script>
 </body>
