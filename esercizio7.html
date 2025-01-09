@@ -1,1 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valore Immobiliare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, select, input, button, p {
+            margin: 10px 0;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calcolo Valore Immobiliare</h1>
+    <label for="citta">Seleziona la città:</label>
+    <select id="citta">
+        <option value="genova">Genova</option>
+        <option value="savona">Savona</option>
+        <option value="imperia">Imperia</option>
+    </select>
+    <label for="mq">Inserisci i metri quadri:</label>
+    <input type="number" id="mq" placeholder="Es. 100" min="1">
+    <label for="distanza">Inserisci la distanza dal mare (in metri):</label>
+    <input type="number" id="distanza" placeholder="Es. 150" min="0">
+    <button onclick="calcolaValore()">Calcola</button>
+    <p id="risultato"></p>
 
+    <script>
+        function calcolaValore() {
+            const citta = document.getElementById("citta").value;
+            const mq = parseInt(document.getElementById("mq").value);
+            const distanza = parseInt(document.getElementById("distanza").value);
+
+            if (isNaN(mq) || mq <= 0 || isNaN(distanza) || distanza < 0) {
+                document.getElementById("risultato").textContent = "Inserisci valori validi.";
+                return;
+            }
+
+            // Definizione del costo base per città
+            let costoBase = 0;
+            if (citta === "genova") costoBase = 5000;
+            else if (citta === "savona") costoBase = 7000;
+            else if (citta === "imperia") costoBase = 6000;
+
+            // Calcolo del costo aggiuntivo in base alla distanza dal mare
+            let costoAggiuntivo = 0;
+            if (distanza < 100) {
+                costoAggiuntivo = 3000;
+            } else if (distanza >= 100 && distanza <= 500) {
+                costoAggiuntivo = 1500;
+            } else if (distanza > 500) {
+                costoAggiuntivo = 1000;
+            }
+
+            // Calcolo del costo totale al metro quadro
+            const costoTotaleMq = costoBase + costoAggiuntivo;
+            const costoTotale = mq * costoTotaleMq;
+
+            // Mostra il risultato
+            document.getElementById("risultato").textContent = `Il valore immobiliare della casa è ${costoTotale} euro (${costoTotaleMq} euro/mq).`;
+        }
+    </script>
+</body>
+</html>
