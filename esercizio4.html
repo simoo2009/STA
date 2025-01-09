@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inserisci il tuo nome e sesso</title>
+    <title>Inserisci il tuo mese e anno</title>
     <script>
         function mostraMessaggio() {
-            var nome = document.getElementById("nome").value;
-            var sesso = document.querySelector('input[name="sesso"]:checked').value;
+            var nome = document.getElementById("mese").value;
+            var sesso = document.querySelector('input[name="anno"]:checked').value;
             var messaggio = "";
 
-            if (sesso === "m") {
-                messaggio = "Ciao " + nome + ", la tua aspettativa di vita in Italia è di circa 80 anni.";
+            if (mese === "m") {
+                messaggio = "il " + mese + ", sei nato a .";
             } else if (sesso === "f") {
                 messaggio = "Ciao " + nome + ", la tua aspettativa di vita in Italia è di circa 85 anni.";
             }
