@@ -1,1 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controllo Parità</title>
+    <script>
+        function checkPariDispari() {
+            // Otteniamo il valore inserito dall'utente
+            var numero = document.getElementById("numero").value;
+
+            // Controlliamo se il numero è pari o dispari
+            if (numero % 2 == 0) {
+                document.getElementById("risultato").innerHTML = "Il numero " + numero + " è PARI.";
+            } else {
+                document.getElementById("risultato").innerHTML = "Il numero " + numero + " è DISPARI.";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Controlla se un numero è pari o dispari</h2>
+    <label for="numero">Inserisci un numero:</label>
+    <input type="number" id="numero" required>
+    <button onclick="checkPariDispari()">Verifica</button>
+    
+    <p id="risultato"></p>
+</body>
+</html>
 
