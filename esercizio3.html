@@ -1,1 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserisci il tuo nome e sesso</title>
+    <script>
+        function mostraMessaggio() {
+            var nome = document.getElementById("nome").value;
+            var sesso = document.querySelector('input[name="sesso"]:checked').value;
+            var messaggio = "";
+
+            if (sesso === "m") {
+                messaggio = "Ciao " + nome + ", la tua aspettativa di vita in Italia è di circa 80 anni.";
+            } else if (sesso === "f") {
+                messaggio = "Ciao " + nome + ", la tua aspettativa di vita in Italia è di circa 85 anni.";
+            }
+
+            document.getElementById("risultato").innerText = messaggio;
+        }
+    </script>
+</head>
+<body>
+    <h1>Inserisci il tuo nome e sesso</h1>
+    
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" required><br><br>
+
+    <label>Sesso:</label>
+    <input type="radio" id="maschio" name="sesso" value="m" required> Maschio
+    <input type="radio" id="femmina" name="sesso" value="f" required> Femmina<br><br>
+
+    <button onclick="mostraMessaggio()">Invia</button>
+
+    <p id="risultato"></p>
+</body>
+</html>
 
