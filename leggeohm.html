@@ -1,1 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore della Legge di Ohm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input {
+            padding: 5px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: rgb(255, 255, 255);
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00ff0d;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Calcolatore della Legge di Ohm</h1>
+    <p>Scegli una formula:</p>
+    <form id="ohmForm">
+        <label for="formulaChoice">Scegli la formula:</label>
+        <select id="formulaChoice">
+            <option value="1">V = I ⋅ R</option>
+            <option value="2">I = V / R</option>
+            <option value="3">R = V / I</option>
+        </select>
+        <br><br>
+
+        <div id="inputFields"></div>
+
+        <button type="button" onclick="calcola()">Calcola</button>
+    </form>
+
+    <h2>Risultato:</h2>
+    <p id="result"></p>
+
+    <script>
+        // Funzione per mostrare i campi di input in base alla formula scelta
+        function aggiornaInput() {
+            const formulaChoice = document.getElementById("formulaChoice").value;
+            const inputFields = document.getElementById("inputFields");
+
+            // Pulisce i campi di input precedenti
+            inputFields.innerHTML = '';
+
+            if (formulaChoice === '1') {
+                // Formula V = I ⋅ R
+                inputFields.innerHTML = `
+                    <label for="intensita">Intensità di corrente (I in A):</label>
+                    <input type="number" id="intensita" required><br><br>
+                    <label for="resistenza">Resistenza (R in Ω):</label>
+                    <input type="number" id="resistenza" required><br><br>
+                `;
+            } else if (formulaChoice === '2') {
+                // Formula I = V / R
+                inputFields.innerHTML = `
+                    <label for="voltaggio">Voltaggio (V in V):</label>
+                    <input type="number" id="voltaggio" required><br><br>
+                    <label for="resistenza">Resistenza (R in Ω):</label>
+                    <input type="number" id="resistenza" required><br><br>
+                `;
+            } else if (formulaChoice === '3') {
+                // Formula R = V / I
+                inputFields.innerHTML = `
+                    <label for="voltaggio">Voltaggio (V in V):</label>
+                    <input type="number" id="voltaggio" required><br><br>
+                    <label for="intensita">Intensità di corrente (I in A):</label>
+                    <input type="number" id="intensita" required><br><br>
+                `;
+            }
+        }
+
+        // Funzione per eseguire il calcolo
+        function calcola() {
+            const formulaChoice = document.getElementById("formulaChoice").value;
+            let risultato;
+
+            if (formulaChoice === '1') {
+                // Formula V = I ⋅ R
+                const I = parseFloat(document.getElementById("intensita").value);
+                const R = parseFloat(document.getElementById("resistenza").value);
+                if (!isNaN(I) && !isNaN(R)) {
+                    risultato = I * R;
+                    document.getElementById("result").innerText = `Il voltaggio (V) è: ${risultato} Volt`;
+                } else {
+                    document.getElementById("result").innerText = "Per favore, inserisci valori validi per I e R.";
+                }
+            } else if (formulaChoice === '2') {
+                // Formula I = V / R
+                const V = parseFloat(document.getElementById("voltaggio").value);
+                const R = parseFloat(document.getElementById("resistenza").value);
+                if (!isNaN(V) && !isNaN(R) && R !== 0) {
+                    risultato = V / R;
+                    document.getElementById("result").innerText = `L'intensità di corrente (I) è: ${risultato} Ampere`;
+                } else {
+                    document.getElementById("result").innerText = "Per favore, inserisci valori validi per V e R (con R diverso da 0).";
+                }
+            } else if (formulaChoice === '3') {
+                // Formula R = V / I
+                const V = parseFloat(document.getElementById("voltaggio").value);
+                const I = parseFloat(document.getElementById("intensita").value);
+                if (!isNaN(V) && !isNaN(I) && I !== 0) {
+                    risultato = V / I;
+                    document.getElementById("result").innerText = `La resistenza (R) è: ${risultato} Ohm`;
+                } else {
+                    document.getElementById("result").innerText = "Per favore, inserisci valori validi per V e I (con I diverso da 0).";
+                }
+            }
+        }
+
+        // Aggiorna i campi di input quando la pagina viene caricata o cambia la formula
+        document.getElementById("formulaChoice").addEventListener("change", aggiornaInput);
+        aggiornaInput(); // Inizializza i campi di input per la formula predefinita
+    </script>
+    
+</body>
+</html>
 
