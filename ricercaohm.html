@@ -5,153 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <h1>legge di ohm</h1>
     <style>
-        #Miascatola1{
-            background-color: lightgrey;
-                width: 750px;
-                height: 700px;
-                margin: 50px;
-                padding: 50px;
-                border: 2px solid black;
-                background-image: url("OHMGEORGE.jpg");
-        }
         #Scatolapiccola1{
         background-color: white;
-        width: 700px;
-        height: 90px;
+        width: 90%;
+        height: auto;
         margin: 7px;
         padding: 7px;
         border: 2px solid black;
         } 
         #Miascatola11{
             background-color: white;
-        width: 700px;
-        height: 90px;
+        width: 90%;
+        height: auto;
         margin: 7px;
         padding: 7px;
         border: 2px solid black;
             
-        }
-
-        #Miascatola2{
-            background-color: lightgray;
-                width: 750px;
-                height: 1222px;
-                margin: 50px;
-                padding: 50px;
-                border: 2px solid black;
-                background-image: url("OHMGEORGE.jpg");
-        }
-        #Scatolapiccola2{
-        background-color: white;
-        width: 700px;
-        height: 90px;
-        margin: 7px;
-        padding: 7px;
-        border: 2px solid black;
-        }
-        #Miascatola22{
-            background-color: white;
-        width: 700px;
-        height: 110px;
-        margin: 7px;
-        padding: 7px;
-        border: 2px solid black;
         }
         </style>
 </head>
 <body>
-    <div id="Miascatola1">
-        <img src="MAPPA1leggehom.JPG" alt="Avatar" style="width:750px;height: 500px;">
-         
-         <div id="Scatolapiccola1">
-            La prima legge di Ohm è fondamentale per capire come funzionano i circuiti elettrici. Dice che la corrente elettrica (I) che attraversa un conduttore tra due punti è direttamente proporzionale alla tensione (V) applicata ai suoi estremi e inversamente proporzionale alla resistenza (R) del conduttore. In formula, è espressa così: V=𝐼⋅𝑅
-
-         </div>
-         <div id="Miascatola11">
+        <img src="mappaOhm.PNG" alt="Avatar" style="max-width: 100%; height: auto;">
+      
+    <div id="Scatolapiccola1">
+        La prima legge di Ohm è fondamentale per capire come funzionano i circuiti elettrici. Dice che la corrente elettrica (I) che attraversa un conduttore tra due punti è direttamente proporzionale alla tensione (V) applicata ai suoi estremi e inversamente proporzionale alla resistenza (R) del conduttore. In formula, è espressa così: V=𝐼⋅𝑅.
+   
             La legge di Ohm è una relazione fondamentale che descrive il comportamento di un conduttore elettrico, come un filo, quando è attraversato da una corrente elettrica.
             Se aumenti la resistenza (R), per una stessa tensione applicata, la corrente che scorre nel circuito diminuisce.
             Se aumenti la tensione (V), per una stessa resistenza, la corrente aumenta.
             Se aumenti la corrente (I), puoi ottenere il risultato aumentando la tensione o diminuendo la resistenza.
-         </div>
-
     </div>
-    
-</body>
-<body>
-<h1>Calcolo della Legge di Ohm</h1>
-<style>
-#calcolaOhm{
-            position: relative;
-            background-color: #04AA6D;
-            border: none;
-            font-size: 28px;
-            color: #FFFFFF;
-            padding: 20px;
-            width: 200px;
-            text-align: center;
-            transition-duration: 0.4s;
-            text-decoration: none;
-            overflow: hidden;
-            cursor: pointer;
-          }
-          
-          #calcolaOhm:after {
-            content: "";
-            background: #f1f1f1;
-            display: block;
-            position: absolute;
-            padding-top: 300%;
-            padding-left: 350%;
-            margin-left: -20px !important;
-            margin-top: -120%;
-            opacity: 0;
-            transition: all 0.8s
-          }
-          
-          #calcolaOhm:active:after {
-            padding: 0;
-            margin: 0;
-            opacity: 1;
-            transition: 0s
-          }
-
-
-</style>
-
-    <label for="current">Corrente (I in Ampere):</label>
-    <input type="number" id="current" placeholder="Inserisci la corrente (A)" required><br><br>
-
-    <label for="resistance">Resistenza (R in Ohm):</label>
-    <input type="number" id="resistance" placeholder="Inserisci la resistenza (Ω)" required><br><br>
-
-    <button id="calcolaOhm" onclick="calcolaOhm()">Calcola Tensione (V)</button>
-
-    <h2>Tensione (V): <span id="tensione">-</span> Volt</h2>
-
-    <script>
-        function calcolaOhm() {
-            var corrente = parseFloat(document.getElementById('current').value);
-            var resistenza = parseFloat(document.getElementById('resistance').value);
-
-    
-            var tensione = corrente * resistenza;
-
-            
-            document.getElementById('tensione').textContent = tensione.toFixed(2);
-        }
-    </script>
+    <a href="">link riferimento</a>
 
 </body>
-<body>
+
 <div id="Miascatola2">
-    <img src="MAPPALEGGEOHM2.JPG" alt="Avatar" style="width:750px;height: 500px;">
-    <img src="MAPPA3ohm.JPG" alt="Avatar" style="width:750px;height: 500px;">
 
-    <div id="Scatolapiccola2">
+    <div id="Miascatola11">
         La seconda legge di Ohm riguarda il comportamento dei materiali conduttori e descrive come la densità di corrente (quanto corrente scorre attraverso una unità di area) sia legata al campo elettrico applicato e alla conduttività del materiale. La formula che esprime la seconda legge di Ohm è: J=σ⋅E
-    </div>
 
-    <div id="Miascatola22">
         La densità di corrente 
         𝐽
         J indica quanto carico elettrico attraversa una sezione del materiale per unità di area. Se 
@@ -166,6 +58,145 @@
     </div>
 </div>
 </body>
+
+<body>
+    <h1>Calcolo della Legge di Ohm</h1>
+    <style>
+    #calcoloOhmButton{
+                position: relative;
+                background-color: #04AA6D;
+                border: none;
+                font-size: 15px;
+                color: #FFFFFF;
+                padding: 20px;
+                width: 200px;
+                text-align: center;
+                transition-duration: 0.4s;
+                text-decoration: none;
+                overflow: hidden;
+                cursor: pointer;
+              }
+              
+              #calcolaOhm:after {
+                content: "";
+                background: #f1f1f1;
+                display: block;
+                position: absolute;
+                padding-top: 300%;
+                padding-left: 350%;
+                margin-left: -20px !important;
+                margin-top: -120%;
+                opacity: 0;
+                transition: all 0.8s
+              }
+              
+              #calcolaOhm:active:after {
+                padding: 0;
+                margin: 0;
+                opacity: 1;
+                transition: 0s
+              }
+    
+    
+    </style>
+
+    <form id="ohmForm">
+        <label for="formulaChoice">Scegli la formula:</label>
+        <select id="formulaChoice">
+            <option value="1">V = I ⋅ R</option>
+            <option value="2">I = V / R</option>
+            <option value="3">R = V / I</option>
+        </select>
+        <br><br>
+
+        <div id="inputFields"></div>
+
+        <button type="button" id="calcoloOhmButton" onclick="calcolaOhm()">Calcola</button>
+    </form>
+
+    <h2>Risultato:</h2>
+    <p id="result"></p>
+
+        <script>
+            function aggiornaInput() {
+                const formulaChoice = document.getElementById("formulaChoice").value;
+                const inputFields = document.getElementById("inputFields");
+
+                // Pulisce i campi di input precedenti
+                inputFields.innerHTML = '';
+
+                if (formulaChoice === '1') {
+                    // Formula V = I ⋅ R
+                    inputFields.innerHTML = `
+                        <label for="intensita">Intensità di corrente (I in A):</label>
+                        <input type="number" id="intensita" required><br><br>
+                        <label for="resistenza">Resistenza (R in Ω):</label>
+                        <input type="number" id="resistenza" required><br><br>
+                    `;
+                } else if (formulaChoice === '2') {
+                    // Formula I = V / R
+                    inputFields.innerHTML = `
+                        <label for="voltaggio">Voltaggio (V in V):</label>
+                        <input type="number" id="voltaggio" required><br><br>
+                        <label for="resistenza">Resistenza (R in Ω):</label>
+                        <input type="number" id="resistenza" required><br><br>
+                    `;
+                } else if (formulaChoice === '3') {
+                    // Formula R = V / I
+                    inputFields.innerHTML = `
+                        <label for="voltaggio">Voltaggio (V in V):</label>
+                        <input type="number" id="voltaggio" required><br><br>
+                        <label for="intensita">Intensità di corrente (I in A):</label>
+                        <input type="number" id="intensita" required><br><br>
+                    `;
+                }
+            }
+
+            function calcolaOhm() {
+                const formulaChoice = document.getElementById("formulaChoice").value;
+                let risultato;
+
+                if (formulaChoice === '1') {
+                    // Formula V = I ⋅ R
+                    const I = parseFloat(document.getElementById("intensita").value);
+                    const R = parseFloat(document.getElementById("resistenza").value);
+                    if (!isNaN(I) && !isNaN(R)) {
+                        risultato = I * R;
+                        document.getElementById("result").innerText = `Il voltaggio (V) è: ${risultato} Volt`;
+                    } else {
+                        document.getElementById("result").innerText = "Per favore, inserisci valori validi per I e R.";
+                    }
+                } else if (formulaChoice === '2') {
+                    // Formula I = V / R
+                    const V = parseFloat(document.getElementById("voltaggio").value);
+                    const R = parseFloat(document.getElementById("resistenza").value);
+                    if (!isNaN(V) && !isNaN(R) && R !== 0) {
+                        risultato = V / R;
+                        document.getElementById("result").innerText = `L'intensità di corrente (I) è: ${risultato} Ampere`;
+                    } else {
+                        document.getElementById("result").innerText = "Per favore, inserisci valori validi per V e R (con R diverso da 0).";
+                    }
+                } else if (formulaChoice === '3') {
+                    // Formula R = V / I
+                    const V = parseFloat(document.getElementById("voltaggio").value);
+                    const I = parseFloat(document.getElementById("intensita").value);
+                    if (!isNaN(V) && !isNaN(I) && I !== 0) {
+                        risultato = V / I;
+                        document.getElementById("result").innerText = `La resistenza (R) è: ${risultato} Ohm`;
+                    } else {
+                        document.getElementById("result").innerText = "Per favore, inserisci valori validi per V e I (con I diverso da 0).";
+                    }
+                }
+            }
+
+             // Aggiorna i campi di input quando la pagina viene caricata o cambia la formula
+            document.getElementById("formulaChoice").addEventListener("change", aggiornaInput);
+            aggiornaInput(); // Inizializza i campi di input per la formula predefinita
+        </script>
+    
+    </body>
+    <body>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -222,7 +253,7 @@
     <div class="flip-card">
       <div class="flip-card-inner">
         <div class="flip-card-front">
-          <img src="OHMGEORGE.jpg" alt="Avatar" style="width:550px;height:650px;">
+          <img src="Georg_Simon_Ohm.jpg" alt="Avatar" style="width:550px;height:650px;">
         </div>
         <div class="flip-card-back">
           <h1>GEORGE OHM</h1>
