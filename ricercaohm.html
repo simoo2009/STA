@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h1>legge di ohm</h1>
+    <style>
+        #Miascatola1{
+            background-color: lightgrey;
+                width: 750px;
+                height: 700px;
+                margin: 50px;
+                padding: 50px;
+                border: 2px solid black;
+                background-image: url("OHMGEORGE.jpg");
+        }
+        #Scatolapiccola1{
+        background-color: white;
+        width: 700px;
+        height: 90px;
+        margin: 7px;
+        padding: 7px;
+        border: 2px solid black;
+        } 
+        #Miascatola11{
+            background-color: white;
+        width: 700px;
+        height: 90px;
+        margin: 7px;
+        padding: 7px;
+        border: 2px solid black;
+            
+        }
+
+        #Miascatola2{
+            background-color: lightgray;
+                width: 750px;
+                height: 1222px;
+                margin: 50px;
+                padding: 50px;
+                border: 2px solid black;
+                background-image: url("OHMGEORGE.jpg");
+        }
+        #Scatolapiccola2{
+        background-color: white;
+        width: 700px;
+        height: 90px;
+        margin: 7px;
+        padding: 7px;
+        border: 2px solid black;
+        }
+        #Miascatola22{
+            background-color: white;
+        width: 700px;
+        height: 110px;
+        margin: 7px;
+        padding: 7px;
+        border: 2px solid black;
+        }
+        </style>
+</head>
+<body>
+    <div id="Miascatola1">
+        <img src="MAPPA1leggehom.JPG" alt="Avatar" style="width:750px;height: 500px;">
+         
+         <div id="Scatolapiccola1">
+            La prima legge di Ohm è fondamentale per capire come funzionano i circuiti elettrici. Dice che la corrente elettrica (I) che attraversa un conduttore tra due punti è direttamente proporzionale alla tensione (V) applicata ai suoi estremi e inversamente proporzionale alla resistenza (R) del conduttore. In formula, è espressa così: V=𝐼⋅𝑅
+
+         </div>
+         <div id="Miascatola11">
+            La legge di Ohm è una relazione fondamentale che descrive il comportamento di un conduttore elettrico, come un filo, quando è attraversato da una corrente elettrica.
+            Se aumenti la resistenza (R), per una stessa tensione applicata, la corrente che scorre nel circuito diminuisce.
+            Se aumenti la tensione (V), per una stessa resistenza, la corrente aumenta.
+            Se aumenti la corrente (I), puoi ottenere il risultato aumentando la tensione o diminuendo la resistenza.
+         </div>
+
+    </div>
+    
+</body>
+<body>
+<h1>Calcolo della Legge di Ohm</h1>
+<style>
+#calcolaOhm{
+            position: relative;
+            background-color: #04AA6D;
+            border: none;
+            font-size: 28px;
+            color: #FFFFFF;
+            padding: 20px;
+            width: 200px;
+            text-align: center;
+            transition-duration: 0.4s;
+            text-decoration: none;
+            overflow: hidden;
+            cursor: pointer;
+          }
+          
+          #calcolaOhm:after {
+            content: "";
+            background: #f1f1f1;
+            display: block;
+            position: absolute;
+            padding-top: 300%;
+            padding-left: 350%;
+            margin-left: -20px !important;
+            margin-top: -120%;
+            opacity: 0;
+            transition: all 0.8s
+          }
+          
+          #calcolaOhm:active:after {
+            padding: 0;
+            margin: 0;
+            opacity: 1;
+            transition: 0s
+          }
+
+
+</style>
+
+    <label for="current">Corrente (I in Ampere):</label>
+    <input type="number" id="current" placeholder="Inserisci la corrente (A)" required><br><br>
+
+    <label for="resistance">Resistenza (R in Ohm):</label>
+    <input type="number" id="resistance" placeholder="Inserisci la resistenza (Ω)" required><br><br>
+
+    <button id="calcolaOhm" onclick="calcolaOhm()">Calcola Tensione (V)</button>
+
+    <h2>Tensione (V): <span id="tensione">-</span> Volt</h2>
+
+    <script>
+        function calcolaOhm() {
+            var corrente = parseFloat(document.getElementById('current').value);
+            var resistenza = parseFloat(document.getElementById('resistance').value);
+
+    
+            var tensione = corrente * resistenza;
+
+            
+            document.getElementById('tensione').textContent = tensione.toFixed(2);
+        }
+    </script>
+
+</body>
+<body>
+<div id="Miascatola2">
+    <img src="MAPPALEGGEOHM2.JPG" alt="Avatar" style="width:750px;height: 500px;">
+    <img src="MAPPA3ohm.JPG" alt="Avatar" style="width:750px;height: 500px;">
+
+    <div id="Scatolapiccola2">
+        La seconda legge di Ohm riguarda il comportamento dei materiali conduttori e descrive come la densità di corrente (quanto corrente scorre attraverso una unità di area) sia legata al campo elettrico applicato e alla conduttività del materiale. La formula che esprime la seconda legge di Ohm è: J=σ⋅E
+    </div>
+
+    <div id="Miascatola22">
+        La densità di corrente 
+        𝐽
+        J indica quanto carico elettrico attraversa una sezione del materiale per unità di area. Se 
+        𝐽
+        J è elevato, significa che molta corrente scorre attraverso una piccola area.
+        La conduttività elettrica 
+        𝜎
+        σ è una misura di quanto facilmente un materiale permette il passaggio della corrente. Maggiore è la conduttività, maggiore è la capacità di un materiale di condurre elettricità.
+        Il campo elettrico 
+        𝐸
+        E è una misura della forza che agisce sulle cariche per spingerle attraverso il materiale. Più alto è il campo elettrico, maggiore è la spinta che le cariche ricevono. 
+    </div>
+</div>
+</body>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .flip-card {
+      background-color: transparent;
+      width: 550px;
+      height: 650px;
+      perspective: 1000px;
+    }
+    
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+    
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    
+    .flip-card-front {
+      background-color: #bbb;
+      color: black;
+    }
+    
+    .flip-card-back {
+      background-color: #3685b9;
+      color: white;
+      transform: rotateY(180deg);
+    }
+    </style>
+    </head>
+    <body>
+    
+    <h1>Biografia</h1>
+    <h3>Dietro l'immagine:</h3>
+    
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img src="OHMGEORGE.jpg" alt="Avatar" style="width:550px;height:650px;">
+        </div>
+        <div class="flip-card-back">
+          <h1>GEORGE OHM</h1>
+          <p>chi era ?         Georg Simon Alfred Ohm è stato un fisico e matematico tedesco. </p>
+          <p>Georg Simon Ohm, matematico e fratello di Martin Ohm, iniziò le sue ricerche lavorando con la cella elettrochimica inventata da Alessandro Volta. Utilizzando strumenti da lui stesso creati, Ohm scoprì che esiste una relazione diretta tra la tensione (differenza di potenziale) applicata a un conduttore e la corrente elettrica risultante. Questa scoperta è conosciuta come legge di Ohm.     
+            </p>
+            <p>Georg Simon Ohm (1789-1854) è stato un fisico e matematico tedesco, noto soprattutto per aver formulato la legge di Ohm, che descrive la relazione tra la corrente elettrica, la tensione (differenza di potenziale) e la resistenza in un circuito elettrico. Nato a Erlangen, in Baviera, Ohm iniziò i suoi studi all'Università di Erlangen, ma si distinse più per le sue ricerche indipendenti che per il suo percorso accademico formale. Dopo un periodo di insegnamento in Svizzera e Germania, riuscì a pubblicare il suo lavoro più importante nel 1827, intitolato Die galvanische Kette mathematisch bearbeitet (Il circuito galvanico trattato matematicamente), dove presentò la sua teoria sull'elettricità. Tuttavia, non fu subito riconosciuto per il suo lavoro.
+
+                Nel corso della sua vita, Ohm affrontò molte difficoltà professionali, lavorando in scuole di basso livello e vivendo in povertà. Solo dopo anni di sforzi e pubblicazioni, ottenendo riconoscimenti internazionali, riuscì a ottenere una cattedra universitaria e a ricevere premi come la Medaglia Copley nel 1841. La sua vita professionale e il tardivo riconoscimento della sua genialità testimoniano le difficoltà che incontrò nel cercare di affermarsi in un periodo scientifico che non sempre apprezzava l'approccio matematico alle scienze fisiche.
+                
+                Ohm morì nel 1854 a Monaco di Baviera, lasciando un'eredità fondamentale nel campo dell'elettricità e della fisica.</p>
+        </div>
+      </div>
+    </div>
+    
+    </body>
+</html>
