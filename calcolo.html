@@ -38,10 +38,70 @@
 <h1> conclusioni</h1>
 <ul>
 <li>se il numero atomico indica un metallo, è probabilmente un conduttore</li>
-<li>se è un semimetallo</li>
+<li>se è un semimetallo indica un semiconduttore</li>
+<li>se è un non metallo  è probabilmente un isolante</li>
 
 </ul>
     </p>
+
 </div>
+
+
+
+<div>
+
+
+
+<form action="" id="mioforminput">
+
+
+    <input type="number"required name="" id="" placeholder="inserisci il numero atomico">
+    <button type="submit"> ricerca dati del numero atomico</button>
+</form>
+
+
+
+</div>
+<script> 
+ const periodicTable = [
+    { number: 1, symbol: "H", name: "Idrogeno", configuration: "1s1" },
+    { number: 2, symbol: "He", name: "Elio", configuration: "1s2" },
+    { number: 3, symbol: "Li", name: "Litio", configuration: "1s2 2s1" },
+    { number: 4, symbol: "Be", name: "Berillio", configuration: "1s2 2s2" },
+    { number: 5, symbol: "B", name: "Boro", configuration: "1s2 2s2 2p1" },
+    { number: 6, symbol: "C", name: "Carbonio", configuration: "1s2 2s2 2p2" },
+    { number: 7, symbol: "N", name: "Azoto", configuration: "1s2 2s2 2p3" },
+    { number: 8, symbol: "O", name: "Ossigeno", configuration: "1s2 2s2 2p4" },
+    { number: 9, symbol: "F", name: "Fluoro", configuration: "1s2 2s2 2p5" },
+    { number: 10, symbol: "Ne", name: "Neon", configuration: "1s2 2s2 2p6" },
+    { number: 11, symbol: "Na", name: "Sodio", configuration: "1s2 2s2 2p6 3s1" },
+    { number: 12, symbol: "Mg", name: "Magnesio", configuration: "1s2 2s2 2p6 3s2" },
+    { number: 13, symbol: "Al", name: "Alluminio", configuration: "1s2 2s2 2p6 3s2 3p1" },
+    { number: 14, symbol: "Si", name: "Silicio", configuration: "1s2 2s2 2p6 3s2 3p2" },
+    { number: 15, symbol: "P", name: "Fosforo", configuration: "1s2 2s2 2p6 3s2 3p3" },
+    { number: 16, symbol: "S", name: "Zolfo", configuration: "1s2 2s2 2p6 3s2 3p4" },
+    { number: 17, symbol: "Cl", name: "Cloro", configuration: "1s2 2s2 2p6 3s2 3p5" },
+    { number: 18, symbol: "Ar", name: "Argon", configuration: "1s2 2s2 2p6 3s2 3p6" },
+    { number: 19, symbol: "K", name: "Potassio", configuration: "1s2 2s2 2p6 3s2 3p6 4s1" },
+    { number: 20, symbol: "Ca", name: "Calcio", configuration: "1s2 2s2 2p6 3s2 3p6 4s2" },
+    // Aggiungi gli altri elementi...
+    { number: 118, symbol: "Og", name: "Oganesson", configuration: "[Rn] 5f14 6d10 7s2 7p6" }
+    ];
+
+ console.log(periodicTable);
+
+ document.getElementById("mioforminput").addEvenentLisstener("submit",function(event)
+{
+    event.preventDefault(); //evita che ricarico la pagina
+    const input = document.getElementbyid("input");
+    const atomicnumber = parseint(input.value);
+    const element=periodictable = "elemento non trovato"
+
+
+
+
+}
+)
+</script>
 </body>
 </html>
