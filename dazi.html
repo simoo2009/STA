@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore Dazi di Esportazione</title>
+</head>
+<body>
+
+    <h1>Calcolatore Dazi di Esportazione</h1>
+    <p>Inserisci il costo e il ricarico per calcolare il valore di esportazione e la percentuale.</p>
+    
+    <!-- Input per il costo e il ricarico -->
+    <label for="costo">Costo (€):</label>
+    <input type="number" id="costo" placeholder="Costo in Euro">
+    <br>
+
+    <label for="ricarico">Ricarico (€):</label>
+    <input type="number" id="ricarico" placeholder="Ricarico in Euro">
+    <br>
+
+    <!-- Input per la percentuale -->
+    <label for="percentuale">Percentuale (%):</label>
+    <input type="number" id="percentuale" value="20" min="0" max="100">
+    <br>
+
+    <!-- Bottone per calcolare -->
+    <button onclick="calcola()">Calcola</button>
+    
+    <h3>Risultati:</h3>
+    <p id="result"></p>
+
+    <script>
+        // Funzione che esegue i calcoli
+        function calcola() {
+            // Prendi i valori inseriti
+            var costo = parseFloat(document.getElementById("costo").value);
+            var ricarico = parseFloat(document.getElementById("ricarico").value);
+            var percentuale = parseFloat(document.getElementById("percentuale").value);
+
+            // Calcola la somma del costo e del ricarico
+            var totale = costo + ricarico;
+
+            // Calcola la percentuale della somma
+            var valorePercentuale = (totale * percentuale) / 100;
+
+            // Calcolo della conversione in dollari (1 Euro = 1.10 USD)
+            var conversioneDollari = valorePercentuale * 1.1;
+
+            // Dazio del 5%
+            var dazio = valorePercentuale * 0.05;
+
+            // Mostra i risultati
+            document.getElementById("result").innerHTML = `
+                Totale (Costo + Ricarico): €${totale.toFixed(2)} <br>
+                Percentuale calcolata: €${valorePercentuale.toFixed(2)} <br>
+                Dazio (5%): €${dazio.toFixed(2)} <br>
+                Conversione in Dollari: $${conversioneDollari.toFixed(2)}
+            `;
+        }
+    </script>
+
+</body>
+</html>
